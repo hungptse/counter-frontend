@@ -5,8 +5,6 @@ import mailSagas from './mail/saga';
 import notesSagas from './notes/saga';
 import todosSagas from './todos/saga';
 import cardsSagas from './card/saga';
-import youtubeSearchSagas from './youtubeSearch/sagas';
-import devSagas from '../customApp/redux/sagas';
 
 export default function* rootSaga(getState) {
   yield all([
@@ -16,7 +14,5 @@ export default function* rootSaga(getState) {
     notesSagas(),
     todosSagas(),
     cardsSagas(),
-    youtubeSearchSagas(),
-    devSagas()
   ]);
 }

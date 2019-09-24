@@ -12,10 +12,10 @@ export default class ImageCell extends Component {
       ready: false,
     }
   }
-  componentWillMount() {
+  componentDidServerRender() {
     this.loadImage(this.props.src);
   }
-  componentWillReceiveProps(nextProps) {
+  static getDerivedStateFromProps(nextProps) {
     if (nextProps.src !== this.props.src) {
       this.setState({src: null});
       this.loadImage(nextProps.src);

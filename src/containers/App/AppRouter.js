@@ -1,7 +1,6 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import asyncComponent from '../../helpers/AsyncFunc';
-import getDevRouters from '../../customApp/router';
 
 class AppRouter extends React.Component {
   render() {
@@ -32,11 +31,6 @@ class AppRouter extends React.Component {
           exact
           path={`${url}/googlemap`}
           component={asyncComponent(() => import('../Map/GoogleMap/googleMap'))}
-        />
-        <Route
-          exact
-          path={`${url}/leafletmap`}
-          component={asyncComponent(() => import('../Map/Leaflet/leaflet'))}
         />
         <Route
           exact
@@ -313,13 +307,6 @@ class AppRouter extends React.Component {
         />
         <Route
           exact
-          path={`${url}/shop`}
-          component={asyncComponent(() =>
-            import('../Ecommerce/algolia/instantSearch')
-          )}
-        />
-        <Route
-          exact
           path={`${url}/reactDates`}
           component={asyncComponent(() =>
             import('../AdvancedUI/ReactDates/reactDates')
@@ -342,16 +329,9 @@ class AppRouter extends React.Component {
         />
         <Route
           exact
-          path={`${url}/youtubeSearch`}
-          component={asyncComponent(() => import('../YoutubeSearch'))}
-        />
-        <Route
-          exact
           path={`${url}/frappeChart`}
           component={asyncComponent(() => import('../Charts/frappeChart'))}
         />
-        
-        {getDevRouters(url)}
       </Switch>
     );
   }

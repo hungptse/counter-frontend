@@ -31,7 +31,7 @@ class DynamicDoughnutChart extends React.Component {
     super(props);
     this.state = getState();
   }
-	componentWillMount() {
+	componentDidServerRender() {
 		setInterval(() => {
 			this.setState(getState());
 		}, 5000);

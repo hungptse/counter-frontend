@@ -5,19 +5,17 @@ import Input from '../../components/uielements/input';
 import Checkbox from '../../components/uielements/checkbox';
 import Button from '../../components/uielements/button';
 import authAction from '../../redux/auth/actions';
-import Auth0 from '../../helpers/auth0';
-import Firebase from '../../helpers/firebase';
-import FirebaseLogin from '../../components/firebase';
+// import Firebase from '../../helpers/firebase';
+// import FirebaseLogin from '../../components/firebase';
 import IntlMessages from '../../components/utility/intlMessages';
 import SignInStyleWrapper from './signin.style';
-
 const { login } = authAction;
 
 class SignIn extends Component {
   state = {
     redirectToReferrer: false,
   };
-  componentWillReceiveProps(nextProps) {
+  static getDerivedStateFromProps(nextProps) {
     if (
       this.props.isLoggedIn !== nextProps.isLoggedIn &&
       nextProps.isLoggedIn === true
@@ -49,11 +47,11 @@ class SignIn extends Component {
 
             <div className="isoSignInForm">
               <div className="isoInputWrapper">
-                <Input size="large" placeholder="Username" />
+                <Input placeholder="Username" />
               </div>
 
               <div className="isoInputWrapper">
-                <Input size="large" type="password" placeholder="Password" />
+                <Input type="password" placeholder="Password" />
               </div>
 
               <div className="isoInputWrapper isoLeftRightComponent">
@@ -64,12 +62,12 @@ class SignIn extends Component {
                   <IntlMessages id="page.signInButton" />
                 </Button>
               </div>
-
+              {/* 
               <p className="isoHelperText">
                 <IntlMessages id="page.signInPreview" />
-              </p>
+              </p> */}
 
-              <div className="isoInputWrapper isoOtherLogin">
+              {/* <div className="isoInputWrapper isoOtherLogin">
                 <Button onClick={this.handleLogin} type="primary btnFacebook">
                   <IntlMessages id="page.signInFacebook" />
                 </Button>
@@ -88,14 +86,25 @@ class SignIn extends Component {
                   </Button>}
 
                 {Firebase.isValid && <FirebaseLogin login={this.handleLogin} />}
-              </div>
-              <div className="isoCenterComponent isoHelperWrapper">
+              </div> */}
+
+              {/* <div className="isoCenterComponent isoHelperWrapper">
                 <Link to="/forgotpassword" className="isoForgotPass">
                   <IntlMessages id="page.signInForgotPass" />
                 </Link>
                 <Link to="/signup">
                   <IntlMessages id="page.signInCreateAccount" />
                 </Link>
+              </div> */}
+
+              <div className="isoCenterComponent isoHelperWrapper">
+                <Link to="/forgotpassword" className="isoForgotPass">
+                  <IntlMessages id="page.signInForgotPass" />
+                </Link>
+
+                {/* <Link to="/signup">
+                  <IntlMessages id="page.signInCreateAccount" />
+                </Link> */}
               </div>
             </div>
           </div>

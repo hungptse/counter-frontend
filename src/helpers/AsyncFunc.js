@@ -12,7 +12,7 @@ export default function asyncComponent(importComponent) {
         component: null
       };
     }
-    componentWillMount() {
+    componentDidServerRender() {
       Nprogress.start();
     }
     componentWillUnmount() {

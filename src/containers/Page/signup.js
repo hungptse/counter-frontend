@@ -5,7 +5,6 @@ import Input from '../../components/uielements/input';
 import Checkbox from '../../components/uielements/checkbox';
 import Button from '../../components/uielements/button';
 import authAction from '../../redux/auth/actions';
-import Auth0 from '../../helpers/auth0/index';
 import Firebase from '../../helpers/firebase';
 import FirebaseLogin from '../../components/firebase';
 import IntlMessages from '../../components/utility/intlMessages';
@@ -17,7 +16,7 @@ class SignUp extends React.Component {
   state = {
     redirectToReferrer: false,
   };
-  componentWillReceiveProps(nextProps) {
+  static getDerivedStateFromProps(nextProps) {
     if (
       this.props.isLoggedIn !== nextProps.isLoggedIn &&
       nextProps.isLoggedIn === true
@@ -85,16 +84,6 @@ class SignUp extends React.Component {
                 <Button onClick={this.handleLogin} type="primary btnGooglePlus">
                   <IntlMessages id="page.signUpGooglePlus" />
                 </Button>
-                {Auth0.isValid &&
-                  <Button
-                    onClick={() => {
-                      Auth0.login(this.handleLogin);
-                    }}
-                    type="primary btnAuthZero"
-                  >
-                    <IntlMessages id="page.signUpAuth0" />
-                  </Button>}
-
                 {Firebase.isValid &&
                   <FirebaseLogin signup={true} login={this.handleLogin} />}
               </div>

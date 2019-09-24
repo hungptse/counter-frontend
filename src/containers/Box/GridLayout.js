@@ -23,10 +23,10 @@ class GridLayout extends Component {
       breakpoint: 'lg',
     };
   }
-  componentWillMount() {
+  componentDidServerRender() {
     this.setState({ allBox: this.props.allBox });
   }
-  componentWillReceiveProps(nextProps) {
+  static getDerivedStateFromProps(nextProps) {
     if (nextProps.reload) {
       this.setState({ allBox: nextProps.allBox });
     }

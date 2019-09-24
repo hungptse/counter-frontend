@@ -1,5 +1,5 @@
 {
-  "name": "isomorphic",
+  "name": "counter-fe",
   "version": "2.4.0",
   "private": true,
   "dependencies": {

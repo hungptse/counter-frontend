@@ -6,7 +6,6 @@ import { Layout } from 'antd';
 import { Scrollbars } from 'react-custom-scrollbars';
 import Menu from '../../components/uielements/menu';
 import IntlMessages from '../../components/utility/intlMessages';
-import getDevSidebar from '../../customApp/sidebar';
 import SidebarWrapper from './sidebar.style';
 
 import appActions from '../../redux/app/actions';
@@ -158,11 +157,6 @@ class Sidebar extends Component {
                   </span>
                 }
               >
-                <Menu.Item style={submenuStyle} key="shop">
-                  <Link style={submenuColor} to={`${url}/shop`}>
-                    <IntlMessages id="sidebar.shop" />
-                  </Link>
-                </Menu.Item>
                 <Menu.Item style={submenuStyle} key="cart">
                   <Link style={submenuColor} to={`${url}/cart`}>
                     <IntlMessages id="sidebar.cart" />
@@ -180,41 +174,14 @@ class Sidebar extends Component {
                 </Menu.Item>
               </SubMenu>
 
-              <SubMenu
-                key="map"
-                title={
-                  <span className="isoMenuHolder" style={submenuColor}>
-                    <i className="ion-map" />
-                    <span className="nav-text">
-                      <IntlMessages id="sidebar.maps" />
-                    </span>
-                  </span>
-                }
-              >
-                <Menu.Item style={submenuStyle} key="googlemap">
-                  <Link style={submenuColor} to={`${url}/googlemap`}>
-                    <IntlMessages id="sidebar.googleMap" />
-                  </Link>
-                </Menu.Item>
-                <Menu.Item style={submenuStyle} key="leafletmap">
-                  <Link style={submenuColor} to={`${url}/leafletmap`}>
-                    <IntlMessages id="sidebar.leafletMap" />
-                  </Link>
-                </Menu.Item>
-              </SubMenu>
-
-              <Menu.Item key="youtubeSearch">
-                <Link to={`${url}/youtubeSearch`}>
-                  <span className="isoMenuHolder" style={submenuColor}>
-                    <i className="ion-social-youtube" />
-                    <span className="nav-text">
-                      <IntlMessages id="sidebar.youtubeSearch" />
-                    </span>
-                  </span>
+              <Menu.Item style={submenuStyle} key="googlemap">
+                <Link style={submenuColor} to={`${url}/googlemap`}>
+                  <IntlMessages id="sidebar.googleMap" />
                 </Link>
               </Menu.Item>
 
-              <Menu.Item key="calendar">
+
+              {/* <Menu.Item key="calendar">
                 <Link to={`${url}/calendar`}>
                   <span className="isoMenuHolder" style={submenuColor}>
                     <i className="ion-calendar" />
@@ -223,7 +190,7 @@ class Sidebar extends Component {
                     </span>
                   </span>
                 </Link>
-              </Menu.Item>
+              </Menu.Item> */}
 
               <Menu.Item key="notes">
                 <Link to={`${url}/notes`}>
@@ -386,16 +353,16 @@ class Sidebar extends Component {
                 </Menu.Item>
               </SubMenu>
 
-              {/* <Menu.Item key="grid_layout">
-              <Link to={`${url}/gridLayout`}>
-                <span className="isoMenuHolder" style={submenuColor}>
-                  <i className="ion-cube" />
-                  <span className="nav-text">
-                    <IntlMessages id="sidebar.boxOptions" />
+              <Menu.Item key="grid_layout">
+                <Link to={`${url}/gridLayout`}>
+                  <span className="isoMenuHolder" style={submenuColor}>
+                    <i className="ion-cube" />
+                    <span className="nav-text">
+                      <IntlMessages id="sidebar.boxOptions" />
+                    </span>
                   </span>
-                </span>
-              </Link>
-            </Menu.Item> */}
+                </Link>
+              </Menu.Item>
 
               <SubMenu
                 key="uielements"
@@ -648,8 +615,6 @@ class Sidebar extends Component {
                   </Menu.Item>
                 </MenuItemGroup>
               </SubMenu>
-
-              {getDevSidebar(url, submenuColor)}
             </Menu>
           </Scrollbars>
         </Sider>
