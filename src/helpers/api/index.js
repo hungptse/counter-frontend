@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:3333/api";
+const BASE_URL = "http://http://23.101.5.241:3333/api";
 export const GET = async (endpoint, params = {}, headers = {}) => {
     const res = await fetch(`${BASE_URL}${endpoint}`, {
         method: 'GET',
