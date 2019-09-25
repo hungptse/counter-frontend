@@ -12,7 +12,7 @@ import config, {
 } from './containers/LanguageSwitcher/config';
 import { themeConfig } from './config';
 import DashAppHolder from './dashAppStyle';
-// import 'antd/dist/antd.css';
+import 'antd/dist/antd.css';
 
 const currentAppLocale =
   AppLocale[getCurrentLanguage(config.defaultLanguage || 'english').locale];

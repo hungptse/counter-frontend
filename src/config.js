@@ -2,8 +2,8 @@ export default {
   apiUrl: 'http://joeylin.net/api/',
 };
 const siteConfig = {
-  siteName: 'counter.net',
-  siteIcon: 'ion-beer',
+  siteName: 'counter.fptu',
+  siteIcon: 'ion-ios-barcode-outline',
   footerText: '©2019 Created with LOVE by HungPT',
 };
 

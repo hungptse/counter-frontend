@@ -1,0 +1,15 @@
+pipeline {
+    agent any 
+    stages {
+        stage('Build') { 
+            steps {
+                sh 'docker build -t counter-fe .'
+            }
+        }
+        stage('Release') { 
+            steps {
+                sh 'docker run -it -d --name counter-fe -p 3000:3000 counter-fe:latest'
+            }
+        }
+    }
+}
