@@ -16,7 +16,7 @@ class SignUp extends React.Component {
   state = {
     redirectToReferrer: false,
   };
-  static getDerivedStateFromProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (
       this.props.isLoggedIn !== nextProps.isLoggedIn &&
       nextProps.isLoggedIn === true

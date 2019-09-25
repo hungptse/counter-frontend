@@ -116,11 +116,6 @@ class AppRouter extends React.Component {
         />
         <Route
           exact
-          path={`${url}/gridLayout`}
-          component={asyncComponent(() => import('../Box/GridLayout'))}
-        />
-        <Route
-          exact
           path={`${url}/notes`}
           component={asyncComponent(() => import('../Notes'))}
         />

@@ -15,7 +15,7 @@ export default class ImageCell extends Component {
   componentDidServerRender() {
     this.loadImage(this.props.src);
   }
-  static getDerivedStateFromProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.src !== this.props.src) {
       this.setState({ src: null });
       this.loadImage(nextProps.src);

@@ -19,7 +19,7 @@ const RestrictedRoute = ({ component: Component, isLoggedIn, ...rest }) => (
       />}
   />
 );
-const PublicRoutes = ({ history, isLoggedIn }) => {
+const PublicRoutes = ({ history, isLoggedIn }) => {  
   return (
     <ConnectedRouter history={history}>
       <div>

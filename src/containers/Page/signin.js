@@ -10,22 +10,33 @@ import authAction from '../../redux/auth/actions';
 import IntlMessages from '../../components/utility/intlMessages';
 import SignInStyleWrapper from './signin.style';
 const { login } = authAction;
-
 class SignIn extends Component {
   state = {
     redirectToReferrer: false,
+    username: '',
+    password: ''
   };
-  static getDerivedStateFromProps(nextProps) {
-    if (
-      this.props.isLoggedIn !== nextProps.isLoggedIn &&
-      nextProps.isLoggedIn === true
-    ) {
-      this.setState({ redirectToReferrer: true });
-    }
-  }
+  // UNSAFE_componentWillReceiveProps(nextProps){
+  //   if (
+  //     this.props.isLoggedIn !== nextProps.isLoggedIn &&
+  //     nextProps.isLoggedIn === true
+  //   ) {
+  //     this.setState({ redirectToReferrer: true });
+  //   }
+  // }
   handleLogin = () => {
     const { login } = this.props;
-    login();
+    const { username, password } = this.state
+    if (username === '' || password === '') {
+      return;
+    } else {
+      const res = login({
+        username: username,
+        password: password
+      });
+      console.log(res);
+      
+    }
     this.props.history.push('/dashboard');
   };
   render() {
@@ -47,11 +58,11 @@ class SignIn extends Component {
 
             <div className="isoSignInForm">
               <div className="isoInputWrapper">
-                <Input placeholder="Username" />
+                <Input placeholder="Username" onChange={(e) => this.setState({ username: e.target.value })} />
               </div>
 
               <div className="isoInputWrapper">
-                <Input type="password" placeholder="Password" />
+                <Input type="password" placeholder="Password" onChange={(e) => this.setState({ password: e.target.value })} />
               </div>
 
               <div className="isoInputWrapper isoLeftRightComponent">
@@ -116,7 +127,7 @@ class SignIn extends Component {
 
 export default connect(
   state => ({
-    isLoggedIn: state.Auth.get('idToken') !== null ? true : false,
+    isLoggedIn: state.Auth.get('idToken') !== null,
   }),
   { login }
 )(SignIn);
