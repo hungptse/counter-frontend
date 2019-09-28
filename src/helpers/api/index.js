@@ -1,4 +1,4 @@
-const BASE_URL = "https://23.101.5.241/api";
+const BASE_URL = "https://swd-backend.hangnoidiachauau.com/api";
 export const GET = async (endpoint, params = {}, headers = {}) => {
     const res = await fetch(`${BASE_URL}${endpoint}`, {
         method: 'GET',
