@@ -173,14 +173,6 @@ class Sidebar extends Component {
                   </Link>
                 </Menu.Item>
               </SubMenu>
-
-              <Menu.Item style={submenuStyle} key="googlemap">
-                <Link style={submenuColor} to={`${url}/googlemap`}>
-                  <IntlMessages id="sidebar.googleMap" />
-                </Link>
-              </Menu.Item>
-
-
               {/* <Menu.Item key="calendar">
                 <Link to={`${url}/calendar`}>
                   <span className="isoMenuHolder" style={submenuColor}>

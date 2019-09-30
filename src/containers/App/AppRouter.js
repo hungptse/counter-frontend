@@ -29,11 +29,6 @@ class AppRouter extends React.Component {
         />
         <Route
           exact
-          path={`${url}/googlemap`}
-          component={asyncComponent(() => import('../Map/GoogleMap/googleMap'))}
-        />
-        <Route
-          exact
           path={`${url}/table_fb`}
           component={asyncComponent(() => import('../Tables/fbTables/'))}
         />
