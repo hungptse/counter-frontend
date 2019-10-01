@@ -9,6 +9,6 @@ const authActons = {
   }),
   logout: () => ({
     type: authActons.LOGOUT,
-  }),
+  })
 };
 export default authActons;

@@ -9,6 +9,8 @@ import authAction from '../../redux/auth/actions';
 // import FirebaseLogin from '../../components/firebase';
 import IntlMessages from '../../components/utility/intlMessages';
 import SignInStyleWrapper from './signin.style';
+import notifications from '../../components/feedback/notification';
+
 const { login } = authAction;
 class SignIn extends Component {
   state = {
@@ -25,19 +27,30 @@ class SignIn extends Component {
   //   }
   // }
   handleLogin = () => {
-    const { login } = this.props;
+    const { login, response } = this.props;
     const { username, password } = this.state
     if (username === '' || password === '') {
+      notifications.warning({
+        message: 'HKT Counter Info',
+        description: 'Please input username & password',
+        placement: "bottomRight",
+        duration: 2,
+      })
       return;
     } else {
-      const res = login({
+      login({
         username: username,
         password: password
       });
-      console.log(res);
-      
+      if (response.status !== 200) {
+        notifications.warning({
+          message: 'HKT Counter Info',
+          description: response.message,
+          placement: "bottomRight",
+          duration: 2,
+        })
+      }
     }
-    this.props.history.push('/dashboard');
   };
   render() {
     const from = { pathname: '/dashboard' };
@@ -127,7 +140,8 @@ class SignIn extends Component {
 
 export default connect(
   state => ({
-    isLoggedIn: state.Auth.get('idToken') !== null,
+    isLoggedIn: state.Auth.idToken !== null,
+    response: state.Auth.response
   }),
   { login }
 )(SignIn);

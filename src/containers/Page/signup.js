@@ -102,7 +102,7 @@ class SignUp extends React.Component {
 
 export default connect(
   state => ({
-    isLoggedIn: state.Auth.get('idToken') !== null ? true : false,
+    isLoggedIn: state.Auth.idToken !== null ? true : false,
   }),
   { login }
 )(SignUp);
