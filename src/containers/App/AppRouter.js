@@ -14,16 +14,6 @@ class AppRouter extends React.Component {
         />
         <Route
           exact
-          path={`${url}/inbox`}
-          component={asyncComponent(() => import('../Mail'))}
-        />
-        <Route
-          exact
-          path={`${url}/mailbox`}
-          component={asyncComponent(() => import('../Mail'))}
-        />
-        <Route
-          exact
           path={`${url}/calendar`}
           component={asyncComponent(() => import('../Calendar/Calendar'))}
         />
@@ -321,6 +311,16 @@ class AppRouter extends React.Component {
           exact
           path={`${url}/frappeChart`}
           component={asyncComponent(() => import('../Charts/frappeChart'))}
+        />
+        <Route
+          exact
+          path={`${url}/role`}
+          component={asyncComponent(() => import('../UserManagement/checkout'))}
+        />
+        <Route
+          exact
+          path={`${url}/user`}
+          component={asyncComponent(() => import('../UserManagement/checkout'))}
         />
       </Switch>
     );

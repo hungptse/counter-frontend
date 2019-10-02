@@ -2,6 +2,7 @@ import { getCurrentTheme } from '../../containers/ThemeSwitcher/config';
 const actions = {
   CHANGE_THEME: 'CHANGE_THEME',
   SWITCH_ACTIVATION: 'SWITCH_ACTIVATION',
+  HIDE_SWITCH_ACTIVATION : 'HIDE_SWITCH_ACTIVATION',
   switchActivation: () => ({
     type: actions.SWITCH_ACTIVATION
   }),

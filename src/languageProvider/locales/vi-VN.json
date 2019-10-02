@@ -1,4 +1,7 @@
 {
+  "sidebar.userManagement": "Quản lý người dùng",
+  "sidebar.userManagement.role": "Phân quyền",
+  "sidebar.userManagement.user": "Người dùng",
   "sidebar.email": "Email",
   "sidebar.ecommerce": "Thương mại điện tử",
   "sidebar.shop": "Cửa hàng",
@@ -566,8 +569,8 @@
   "email.cancel": "取消",
   "email.compose": "撰写",
   "email.noMessage": "请选择一个邮件阅读",
-  "themeSwitcher.purchase": "立即购买",
-  "themeSwitcher.settings": "设置",
+  "themeSwitcher.save": "Lưu cài đặt",
+  "themeSwitcher.settings": "Cài đặt",
   "sidebar.selectbox": "选择",
   "sidebar.frappeChart": "Frappe Charts",
   "topbar.help": "帮帮我",

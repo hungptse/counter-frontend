@@ -1,6 +1,5 @@
 import Auth from './auth/reducer';
 import App from './app/reducer';
-import Mails from './mail/reducer';
 import Calendar from './calendar/reducer';
 import Notes from './notes/reducer';
 import Todos from './todos/reducer';
@@ -16,7 +15,6 @@ export default {
   App,
   ThemeSwitcher,
   LanguageSwitcher,
-  Mails,
   Calendar,
   Notes,
   Todos,

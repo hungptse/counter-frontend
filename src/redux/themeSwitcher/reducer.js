@@ -22,7 +22,7 @@ const initState = new Map({
   )
 });
 
-export default function(state = initState, action) {
+export default function (state = initState, action) {
   switch (action.type) {
     case actions.SWITCH_ACTIVATION:
       return state.set('isActivated', !state.get('isActivated'));

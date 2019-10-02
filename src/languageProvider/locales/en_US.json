@@ -627,7 +627,7 @@
   "email.cancel": "CANCEL",
   "email.compose": "COMPOSE",
   "email.noMessage": "Please select a mail to read",
-  "themeSwitcher.purchase": "SAVE",
+  "themeSwitcher.save": "SAVE",
   "themeSwitcher.settings": "Settings",
   "sidebar.selectbox": "Select",
   "sidebar.frappeChart": "Frappe Charts",

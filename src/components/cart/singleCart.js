@@ -20,8 +20,6 @@ export default class CartRow extends Component {
       image,
       name,
       description,
-      objectID,
-      cancelQuantity,
       id
     } = this.props;
     const totalPrice = (price * quantity).toFixed(2);

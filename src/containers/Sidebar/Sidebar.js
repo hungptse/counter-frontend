@@ -146,18 +146,18 @@ class Sidebar extends Component {
                   </span>
                 }
               >
-                <Menu.Item style={submenuStyle} key="cart">
-                  <Link style={submenuColor} to={`${url}/cart`}>
+                <Menu.Item style={submenuStyle} key="role">
+                  <Link style={submenuColor} to={`${url}/role`}>
                     <IntlMessages id="sidebar.userManagement.role" />
                   </Link>
                 </Menu.Item>
-                <Menu.Item style={submenuStyle} key="checkout">
-                  <Link style={submenuColor} to={`${url}/checkout`}>
+                <Menu.Item style={submenuStyle} key="user">
+                  <Link style={submenuColor} to={`${url}/user`}>
                     <IntlMessages id="sidebar.userManagement.user" />
                   </Link>
                 </Menu.Item>
               </SubMenu>
-
+{/* 
               <Menu.Item key="mailbox">
                 <Link to={`${url}/mailbox`}>
                   <span className="isoMenuHolder" style={submenuColor}>
@@ -167,7 +167,7 @@ class Sidebar extends Component {
                     </span>
                   </span>
                 </Link>
-              </Menu.Item>
+              </Menu.Item> */}
 
               <SubMenu
                 key="ecommerce"

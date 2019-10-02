@@ -61,13 +61,15 @@ class ThemeSwitcher extends Component {
         </div>
 
         <div className="purchaseBtnWrapper">
-          <a
-            // href="https://themeforest.net/item/isomorphic-react-redux-admin-dashboard/20262330?ref=redqteam"
+          <button
             className="purchaseBtn"
             style={styleButton}
+            onClick={() => {
+              switchActivation();
+            }}
           >
-            <IntlMessages id="themeSwitcher.purchase" />
-          </a>
+            <IntlMessages id="themeSwitcher.save" />
+          </button>
         </div>
 
         <button
