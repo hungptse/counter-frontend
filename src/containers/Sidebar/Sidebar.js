@@ -136,7 +136,7 @@ class Sidebar extends Component {
               className="isoDashboardMenu"
             >
               <SubMenu
-                key="ecommerce"
+                key="userManagement"
                 title={
                   <span className="isoMenuHolder" style={submenuColor}>
                     <i className="ion-bag" />

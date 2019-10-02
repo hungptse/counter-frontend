@@ -1,5 +1,5 @@
 import { Map } from 'immutable';
-
+import jwt from 'jsonwebtoken'
 export function clearToken() {
   localStorage.removeItem('jwt_token');
 }
@@ -12,6 +12,20 @@ export function getToken() {
     clearToken();
     return new Map();
   }
+}
+
+export function validateToken() {
+  const token = getToken();
+  if (token) {
+    try {
+      var decoded = jwt.verify(token, 'wrong-secret');
+      console.log(decoded);
+      return true;
+    } catch (error) {
+      return false;
+    }
+  }
+  return false;
 }
 
 export function timeDifference(givenTime) {

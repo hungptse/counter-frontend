@@ -1,11 +1,13 @@
-import { getToken } from '../../helpers/utility';
+import { validateToken } from '../../helpers/utility';
 import actions from './actions';
 
 
 const initState = {
-  idToken: 'secret token',
+  isLoggedIn: validateToken(),
   response : {}
 }
+
+
 
 export default function authReducer(
   state = initState,
@@ -13,7 +15,7 @@ export default function authReducer(
 ) {
   switch (action.type) {
     case actions.LOGIN_SUCCESS:
-      return {...state, idToken : getToken()}
+      return {...state, isLoggedIn : true}
       // return state.set('idToken', action.token);
     case actions.LOGIN_ERROR : 
       return {...state, response : action.data}

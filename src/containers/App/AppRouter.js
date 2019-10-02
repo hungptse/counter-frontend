@@ -1,7 +1,7 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import asyncComponent from '../../helpers/AsyncFunc';
-
+import NotFound from '../Page/404'
 class AppRouter extends React.Component {
   render() {
     const { url } = this.props;
@@ -294,11 +294,6 @@ class AppRouter extends React.Component {
         />
         <Route
           exact
-          path={`${url}/codeMirror`}
-          component={asyncComponent(() => import('../AdvancedUI/codeMirror'))}
-        />
-        <Route
-          exact
           path={`${url}/uppy`}
           component={asyncComponent(() => import('../AdvancedUI/uppy'))}
         />
@@ -322,6 +317,8 @@ class AppRouter extends React.Component {
           path={`${url}/user`}
           component={asyncComponent(() => import('../UserManagement/checkout'))}
         />
+        <Route component={NotFound} />
+
       </Switch>
     );
   }

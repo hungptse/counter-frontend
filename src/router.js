@@ -13,13 +13,13 @@ const RestrictedRoute = ({ component: Component, isLoggedIn, ...rest }) => (
       ? <Component {...props} />
       : <Redirect
         to={{
-          pathname: '/signin',
+          pathname: '/',
           state: { from: props.location },
         }}
       />}
   />
 );
-const PublicRoutes = ({ history, isLoggedIn }) => {  
+const PublicRoutes = ({ history, isLoggedIn }) => {
   return (
     <ConnectedRouter history={history}>
       <div>
@@ -30,18 +30,8 @@ const PublicRoutes = ({ history, isLoggedIn }) => {
         />
         <Route
           exact
-          path={'/404'}
-          component={asyncComponent(() => import('./containers/Page/404'))}
-        />
-        <Route
-          exact
           path={'/500'}
           component={asyncComponent(() => import('./containers/Page/500'))}
-        />
-        <Route
-          exact
-          path={'/signin'}
-          component={asyncComponent(() => import('./containers/Page/signin'))}
         />
         <Route
           exact
@@ -65,11 +55,14 @@ const PublicRoutes = ({ history, isLoggedIn }) => {
           component={App}
           isLoggedIn={isLoggedIn}
         />
+        <Route
+          component={asyncComponent(() => import('./containers/Page/404'))}
+        />
       </div>
     </ConnectedRouter>
   );
 };
 
 export default connect(state => ({
-  isLoggedIn: state.Auth.idToken !== null,
+  isLoggedIn: state.Auth.isLoggedIn,
 }))(PublicRoutes);
