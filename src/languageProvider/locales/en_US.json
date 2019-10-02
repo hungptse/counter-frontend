@@ -1,4 +1,7 @@
 {
+  "sidebar.userManagement": "User Management",
+  "sidebar.userManagement.role": "Role Setting",
+  "sidebar.userManagement.user": "User Setting",
   "sidebar.email": "Email",
   "sidebar.ecommerce": "Ecommerce",
   "sidebar.shop": "Shop",

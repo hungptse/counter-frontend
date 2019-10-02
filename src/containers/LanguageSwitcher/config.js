@@ -1,10 +1,7 @@
 import { language } from '../../config.js';
 
-import englishLang from '../../image/flag/uk.svg';
-import chineseLang from '../../image/flag/china.svg';
-import spanishLang from '../../image/flag/spain.svg';
-import frenchLang from '../../image/flag/france.svg';
-import italianLang from '../../image/flag/italy.svg';
+import englishLang from '../../image/flag/eng.svg';
+import vietnamLang from '../../image/flag/vn.svg';
 
 const config = {
   defaultLanguage: language,
@@ -16,28 +13,10 @@ const config = {
       icon: englishLang,
     },
     {
-      languageId: 'chinese',
-      locale: 'zh',
-      text: 'Chinese',
-      icon: chineseLang,
-    },
-    {
-      languageId: 'spanish',
-      locale: 'es',
-      text: 'Spanish',
-      icon: spanishLang,
-    },
-    {
-      languageId: 'french',
-      locale: 'fr',
-      text: 'French',
-      icon: frenchLang,
-    },
-    {
-      languageId: 'italian',
-      locale: 'it',
-      text: 'Italian',
-      icon: italianLang,
+      languageId: 'vietnam',
+      locale: 'vn',
+      text: 'Tiếng Việt',
+      icon: vietnamLang,
     },
   ],
 };

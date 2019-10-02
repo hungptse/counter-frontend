@@ -69,7 +69,7 @@ class CartTable extends Component {
         <table>
           <thead>
             <tr>
-              <th className="isoItemRemove" />
+              {/* <th className="isoItemRemove" /> */}
               <th className="isoItemImage" />
               <th className="isoItemName">Name</th>
               <th className="isoItemPrice">Price</th>

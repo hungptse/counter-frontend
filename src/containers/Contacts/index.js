@@ -90,6 +90,13 @@ class Contacts extends Component {
               >
                 <IntlMessages id="contactlist.addNewContact" />
               </Button>
+              <Button
+                  type="primary"
+                  // onClick={addContact}
+                  className="isoAddContactBtn"
+                >
+                  Send Notification
+                </Button>
             </div>
           )}
         </Layout>

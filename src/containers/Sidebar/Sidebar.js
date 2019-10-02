@@ -135,6 +135,29 @@ class Sidebar extends Component {
               onOpenChange={this.onOpenChange}
               className="isoDashboardMenu"
             >
+              <SubMenu
+                key="ecommerce"
+                title={
+                  <span className="isoMenuHolder" style={submenuColor}>
+                    <i className="ion-bag" />
+                    <span className="nav-text">
+                      <IntlMessages id="sidebar.userManagement" />
+                    </span>
+                  </span>
+                }
+              >
+                <Menu.Item style={submenuStyle} key="cart">
+                  <Link style={submenuColor} to={`${url}/cart`}>
+                    <IntlMessages id="sidebar.userManagement.role" />
+                  </Link>
+                </Menu.Item>
+                <Menu.Item style={submenuStyle} key="checkout">
+                  <Link style={submenuColor} to={`${url}/checkout`}>
+                    <IntlMessages id="sidebar.userManagement.user" />
+                  </Link>
+                </Menu.Item>
+              </SubMenu>
+
               <Menu.Item key="mailbox">
                 <Link to={`${url}/mailbox`}>
                   <span className="isoMenuHolder" style={submenuColor}>

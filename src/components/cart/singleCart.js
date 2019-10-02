@@ -21,20 +21,16 @@ export default class CartRow extends Component {
       name,
       description,
       objectID,
-      cancelQuantity
+      cancelQuantity,
+      id
     } = this.props;
     const totalPrice = (price * quantity).toFixed(2);
     return (
       <tr>
         <td
           className="isoItemRemove"
-          onClick={() => {
-            cancelQuantity(objectID);
-          }}
         >
-          <a>
-            <i className="ion-android-close" />
-          </a>
+          {id}
         </td>
         <td className="isoItemImage">
           <img alt="#" src={image} />

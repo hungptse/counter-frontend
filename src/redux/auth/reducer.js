@@ -1,10 +1,7 @@
 import { getToken } from '../../helpers/utility';
 import actions from './actions';
 
-// const initState = new Map({
-//   idToken: 'secret token',
-//   response : {}
-// });
+
 const initState = {
   idToken: 'secret token',
   response : {}

@@ -42,6 +42,8 @@ class SignIn extends Component {
         username: username,
         password: password
       });
+      console.log(response);
+      
       if (response.status !== 200) {
         notifications.warning({
           message: 'HKT Counter Info',
