@@ -7,10 +7,9 @@ export function clearToken() {
 export function getToken() {
   try {
     const idToken = localStorage.getItem('jwt_token');
-    return new Map({ idToken });
+    return idToken
   } catch (err) {
     clearToken();
-    return new Map();
   }
 }
 
@@ -19,7 +18,6 @@ export function validateToken() {
   if (token) {
     try {
       var decoded = jwt.verify(token, 'wrong-secret');
-      console.log(decoded);
       return true;
     } catch (error) {
       return false;
@@ -47,7 +45,7 @@ export function timeDifference(givenTime) {
     const days = Math.floor((temp %= 31536000) / 86400);
     if (days) {
       if (days < 28) {
-        return days + ' day' + numberEnding(days);
+        return days + ' day' + numberEnding(days) + " ago";
       } else {
         const months = [
           'Jan',

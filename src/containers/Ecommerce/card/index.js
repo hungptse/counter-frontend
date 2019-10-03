@@ -8,12 +8,12 @@ import Box from '../../../components/utility/box';
 import LayoutWrapper from '../../../components/utility/layoutWrapper';
 import Card from '../../../components/card';
 import basicStyle from '../../../config/basicStyle';
-import cardActions from '../../../redux/card/actions';
+import roleActions from '../../../redux/role/actions';
 import { createColumns } from './config';
 import { ButtonWrapper } from '../../../components/card/cardModal.style';
 import SimpleTable from '../../Tables/antTables/tableViews/simpleView';
 
-const { addCard, editCard, deleteCard, restoreCards } = cardActions;
+const { addCard, editCard, deleteCard, restoreCards } = roleActions;
 class Cards extends Component {
   constructor(props) {
     super(props);

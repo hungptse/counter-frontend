@@ -8,6 +8,8 @@ import { CardInfoWrapper, InfoFormWrapper } from './cardModal.style';
 import { InputWrapper } from '../uielements/styles/input.style';
 import Modals from '../../containers/Feedback/Modal/modal.style';
 import WithDirection from '../../config/withDirection';
+import InputBox  from '../utility/input-box'
+import IntlMessages from '../utility/intlMessages';
 
 const WDModal = Modals(isoModal);
 const Modal = WithDirection(WDModal);
@@ -21,43 +23,22 @@ export default class extends Component {
       editView,
       handleCancel,
       selectedCard,
-      submitCard,
+      saveRole,
       updateCard,
     } = this.props;
 
     this.columns = [
       {
-        title: 'Number',
-        dataIndex: 'number',
-        key: 'number',
-      },
-      {
-        title: 'Full Name',
+        title: 'Role name',
         dataIndex: 'name',
         key: 'name',
       },
-      {
-        title: 'Expiry',
-        dataIndex: 'expiry',
-        key: 'expiry',
-      },
-      {
-        title: 'CVC',
-        dataIndex: 'cvc',
-        key: 'cvc',
-      },
     ];
 
-    const saveButton = () => {
-      submitCard();
-    };
     const containerId = 'card-wrapper';
     const cardConfig = {
       container: containerId, // required an object contain the form inputs names. every input must have a unique name prop.
       formInputsNames: {
-        number: 'number', // optional — default "number"
-        expiry: 'expiry', // optional — default "expiry"
-        cvc: 'cvc', // optional — default "cvc"
         name: 'name', // optional - default "name"
       },
       initialValues: selectedCard,
@@ -66,46 +47,23 @@ export default class extends Component {
         invalid: 'valid-input', // optional — default 'jp-card-invalid'
       },
       formatting: true, // optional - default true
-      placeholders: {
-        number: '•••• •••• •••• ••••',
-        expiry: '••/••',
-        cvc: '•••',
-        name: 'Full Name',
-      },
     };
     return (
       <Modal
-        title={modalType === 'edit' ? 'Edit Card' : 'Add Card'}
+        title={modalType === 'edit' ? 'Edit Role' : 'Add Role'}
         visible={editView}
         onCancel={handleCancel}
         cancelText="Cancel"
-        onOk={saveButton}
-        okText={modalType === 'edit' ? 'Edit Card' : 'Add Card'}
+        onOk={saveRole}
+        okText={modalType === 'edit' ? 'Edit Role' : 'Add Role'}
       >
+        <div className="isoInputFieldset vertical">
+          <InputBox
+            label={<IntlMessages id="name" />}
+            placeholder="Admin/Staff/..."
+          />
+        </div>
         <CardInfoWrapper id={containerId} className="isoCardWrapper" />
-
-        <CardReactFormContainer {...cardConfig}>
-          <InfoFormWrapper>
-            <Form className="isoCardInfoForm">
-              {this.columns.map((column, index) => {
-                const { key, title } = column;
-                return (
-                  <InputField
-                    placeholder={title}
-                    type="text"
-                    className={`isoCardInput ${key}`}
-                    onChange={event => {
-                      selectedCard[key] = event.target.value;
-                      updateCard(selectedCard);
-                    }}
-                    name={key}
-                    key={index}
-                  />
-                );
-              })}
-            </Form>
-          </InfoFormWrapper>
-        </CardReactFormContainer>
       </Modal>
     );
   }

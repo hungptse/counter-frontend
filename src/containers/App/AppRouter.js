@@ -270,11 +270,11 @@ class AppRouter extends React.Component {
           path={`${url}/invoice`}
           component={asyncComponent(() => import('../Page/invoice/invoice'))}
         />
-        <Route
+        {/* <Route
           exact
           path={`${url}/card`}
           component={asyncComponent(() => import('../Ecommerce/card'))}
-        />
+        /> */}
         <Route
           exact
           path={`${url}/cart`}
@@ -310,7 +310,7 @@ class AppRouter extends React.Component {
         <Route
           exact
           path={`${url}/role`}
-          component={asyncComponent(() => import('../UserManagement/checkout'))}
+          component={asyncComponent(() => import('../UserManagement/role'))}
         />
         <Route
           exact

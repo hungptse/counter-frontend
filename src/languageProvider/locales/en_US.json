@@ -1,4 +1,6 @@
 {
+  "role.addnew" : "Add New Role",
+  "name" : "Name",
   "sidebar.userManagement": "User Management",
   "sidebar.userManagement.role": "Role Setting",
   "sidebar.userManagement.user": "User Setting",

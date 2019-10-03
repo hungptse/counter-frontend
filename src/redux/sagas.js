@@ -3,7 +3,6 @@ import authSagas from './auth/saga';
 import contactSagas from './contacts/saga';
 import notesSagas from './notes/saga';
 import todosSagas from './todos/saga';
-import cardsSagas from './card/saga';
 
 export default function* rootSaga(getState) {
   yield all([
@@ -11,6 +10,5 @@ export default function* rootSaga(getState) {
     contactSagas(),
     notesSagas(),
     todosSagas(),
-    cardsSagas(),
   ]);
 }
