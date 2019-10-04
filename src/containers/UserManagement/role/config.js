@@ -1,6 +1,7 @@
 import React from 'react';
-import { DeleteCell } from '../../Tables/antTables/helperCells';
+import { DeleteCell, EditableCell } from '../../Tables/antTables/helperCells';
 import { timeDifference } from '../../../helpers/utility';
+import { Icon, Button } from 'antd';
 function createColumns(editColumn, deleteColumn) {
   return [
     {
@@ -16,7 +17,7 @@ function createColumns(editColumn, deleteColumn) {
     {
       title: 'Created At',
       dataIndex: 'createdAt',
-      render: value => <p>{new Date(value).toLocaleString()}</p> 
+      render: value => <p>{new Date(value).toLocaleString()}</p>
     },
     {
       title: 'Action',
@@ -29,6 +30,14 @@ function createColumns(editColumn, deleteColumn) {
             }}
           />
         </span>
+    },
+    {
+      title: 'Action',
+      rowKey: 'action',
+      render: (text, record) =>
+        <Button onClick={() => editColumn(record)}>
+          <Icon style={{ fontSize: '16px', color: '#08c' }} type="edit" className="isoEditIcon"  />
+        </Button>
     }
   ];
 }

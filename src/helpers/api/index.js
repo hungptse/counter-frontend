@@ -12,7 +12,7 @@ export const GET = async (endpoint, params = {}, headers = {}, isAuth = false) =
     });
     return res.json();
 };
-export const POST = async (endpoint, body = {}, params = {}, headers = {},isAuth = false) => {
+export const POST = async (endpoint, body = {}, params = {}, headers = {}, isAuth = false) => {
     headers["Content-Type"] = "application/json";
     if (isAuth) {
         headers["Authorization"] = `Bearer ${getToken()}`;
@@ -24,10 +24,33 @@ export const POST = async (endpoint, body = {}, params = {}, headers = {},isAuth
     });
     return res.json();
 };
-
+export const PUT = async (endpoint, body = {}, params = {}, headers = {}, isAuth = false) => {
+    headers["Content-Type"] = "application/json";
+    if (isAuth) {
+        headers["Authorization"] = `Bearer ${getToken()}`;
+    }
+    const res = await fetch(`${BASE_URL}${endpoint}`, {
+        method: 'PUT',
+        headers: headers,
+        body: JSON.stringify(body)
+    });
+    return res.json();
+};
+export const DELETE = async (endpoint, body = {}, params = {}, headers = {}, isAuth = false) => {
+    headers["Content-Type"] = "application/json";
+    if (isAuth) {
+        headers["Authorization"] = `Bearer ${getToken()}`;
+    }
+    const res = await fetch(`${BASE_URL}${endpoint}`, {
+        method: 'DELETE',
+        headers: headers,
+        body: JSON.stringify(body)
+    });
+    return res.json();
+};
 export const ENDPOINT = {
     AUTH__LOGIN: "/auth/login",
-    ALL_ROLE : '/role',
-    ALL_PERMISSION : '/permission'
+    ALL_ROLE: '/role',
+    ALL_PERMISSION: '/permission'
 
 }

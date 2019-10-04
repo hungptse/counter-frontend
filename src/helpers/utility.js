@@ -16,12 +16,8 @@ export function getToken() {
 export function validateToken() {
   const token = getToken();
   if (token) {
-    try {
-      var decoded = jwt.verify(token, 'wrong-secret');
-      return true;
-    } catch (error) {
-      return false;
-    }
+    let decoded = jwt.decode(token);
+    return new Date().getTime() < 1000 * decoded['exp'];
   }
   return false;
 }

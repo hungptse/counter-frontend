@@ -55,14 +55,15 @@ const PublicRoutes = ({ history, isLoggedIn }) => {
           component={App}
           isLoggedIn={isLoggedIn}
         />
-        <Route
+        
+        {/* <Route
           component={asyncComponent(() => import('./containers/Page/404'))}
-        />
+        /> */}
       </div>
     </ConnectedRouter>
   );
 };
 
 export default connect(state => ({
-  isLoggedIn: state.Auth.isLoggedIn,
+  isLoggedIn: state.Auth.isLoggedIn
 }))(PublicRoutes);

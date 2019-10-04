@@ -10,7 +10,7 @@ import basicStyle from '../../../config/basicStyle';
 import { createColumns } from './config';
 import { ButtonWrapper } from '../../../components/card/cardModal.style';
 import SimpleTable from '../../Tables/antTables/tableViews/simpleView';
-import { GET, ENDPOINT, POST } from '../../../helpers/api';
+import { GET, ENDPOINT, POST, PUT, DELETE } from '../../../helpers/api';
 import IntlMessages from '../../../components/utility/intlMessages'
 import ContentHolder from '../../../components/utility/contentHolder';
 import InputBox from '../../../components/utility/input-box'
@@ -27,7 +27,7 @@ class Role extends Component {
   constructor(props) {
     super(props);
 
-    this.columns = createColumns(this.editColumn, this.props.deleteCard);
+    this.columns = createColumns(this.editRole, this.deleteRole);
     this.state = {
       editView: false,
       selectedCard: null,
@@ -36,7 +36,7 @@ class Role extends Component {
       permissions: [],
       role: {},
       permissionChecked: [],
-      name : ''
+      name: ''
     };
 
 
@@ -49,13 +49,24 @@ class Role extends Component {
   }
 
 
-  // editColumn(card) {
-  //   this.setState({
-  //     editView: true,
-  //     selectedCard: clone(card),
-  //     modalType: 'edit',
-  //   });
-  // }
+  editRole = async (role) => {
+    await this.getAllPermission();
+    this.setState({
+      visible: true,
+      modalType: 'edit',
+      role: role,
+      permissionChecked: role.permissions,
+      name: role.name
+    });
+  }
+  deleteRole = async (role) => {
+    this.setState({
+      roles: this.state.roles.filter(r => r.id !== role.id)
+    })
+    await DELETE(ENDPOINT.ALL_ROLE, {
+      id: role.id
+    }, {}, {}, true);
+  }
   addColumn = () => {
     this.setState({
       editView: true,
@@ -76,41 +87,42 @@ class Role extends Component {
       selectedCard: null,
     });
   }
-  saveRole = (role) => {
-    console.log(role);
-
-    // if (this.state.modalType === 'edit') {
-    //   this.props.editCard(this.state.selectedCard);
-    // } else {
-    //   this.props.addCard(this.state.selectedCard);
-    // }
-    this.setState({
-      editView: false,
-      role: {},
-    });
-  }
   // updateCard(selectedCard) {
   //   this.setState({ selectedCard });
   // }
-
-  showModal = async () => {
+  getAllPermission = async () => {
     if (this.state.permissions.length === 0) {
       await GET(ENDPOINT.ALL_PERMISSION, {}, {}, true).then(res => {
         this.setState({ permissions: res.data.permissions })
       });
     }
+  }
+  addNewRole = async () => {
+    await this.getAllPermission();
     this.setState({
       visible: true,
+      role: {},
+      permissionChecked: [],
+      modalType: 'add'
     });
   };
   handleOk = async () => {
     this.setState({ loading: true });
-    await POST(ENDPOINT.ALL_ROLE, {
-      name: this.state.name,
-      permissions: this.state.permissionChecked
-    }, {}, {},true).then(res => {
-      this.setState({roles : [...this.state.roles,res.data]})
-    });
+    if (this.state.modalType === 'add') {
+      await POST(ENDPOINT.ALL_ROLE, {
+        name: this.state.name,
+        permissions: this.state.permissionChecked
+      }, {}, {}, true).then(res => {
+        this.setState({ roles: [...this.state.roles, res.data] })
+      });
+    } else if (this.state.modalType === 'edit') {
+      await PUT(ENDPOINT.ALL_ROLE, {
+        id: this.state.role.id,
+        permissions: this.state.permissionChecked
+      }, {}, {}, true).then(res => {
+        // this.setState({ roles: [...this.state.roles, res.data] })
+      });
+    }
     setTimeout(() => {
       this.setState({ loading: false, visible: false });
     }, 2000);
@@ -121,9 +133,10 @@ class Role extends Component {
   onCheck = (checkedKeys, info) => {
     this.setState({ permissionChecked: checkedKeys })
   };
+
   render() {
     const { rowStyle, colStyle, gutter } = basicStyle;
-    const { permissions, selectedCard, modalType, role, roles, permissionChecked } = this.state;
+    const { permissions, roles, permissionChecked, role } = this.state;
 
     const renderPermission = (permissions) => {
       return (
@@ -131,6 +144,8 @@ class Role extends Component {
           onCheck={this.onCheck}
           checkable
           defaultExpandedKeys={['ALL']}
+          checkedKeys={permissionChecked}
+        // onSelect={this.onSelect}
         >
           <TreeNode title="All Permissions" key="ALL">
             {permissions.map(p => {
@@ -157,7 +172,7 @@ class Role extends Component {
             <Box>
               <ContentHolder>
                 <ButtonWrapper>
-                  <Button type="primary" onClick={this.showModal}>
+                  <Button type="primary" onClick={this.addNewRole}>
                     {<IntlMessages id="role.addnew" />}
                   </Button>
                 </ButtonWrapper>
@@ -185,6 +200,8 @@ class Role extends Component {
                     <InputBox
                       label={<IntlMessages id="name" />}
                       placeholder="Admin/Staff/..."
+                      value={this.state.name}
+                      required
                       onChange={(e) => this.setState({ name: e.target.value })}
                     />
                   </div>
@@ -194,38 +211,6 @@ class Role extends Component {
               </ContentHolder>
             </Box>
           </Col>
-
-          {/* <Col md={12} sm={12} xs={24} style={colStyle}>
-            <Box
-              title={<IntlMessages id="feedback.alert.modalTitle" />}
-              subtitle={<IntlMessages id="feedback.alert.modalSubTitle" />}
-            >
-              <ContentHolder>
-                <Button onClick={info} style={marginStyle}>
-                  {<IntlMessages id="feedback.alert.infoTitle" />}
-                </Button>
-                <Button onClick={success} style={marginStyle}>
-                  {<IntlMessages id="feedback.alert.successTitle" />}
-                </Button>
-                <Button onClick={error} style={marginStyle}>
-                  {<IntlMessages id="feedback.alert.errorTitle" />}
-                </Button>
-                <Button onClick={warning}>
-                  {<IntlMessages id="feedback.alert.warningTitle" />}
-                </Button>
-              </ContentHolder>
-            </Box>
-            <Box>
-              <ButtonWrapper className="isoButtonWrapper">
-                <Button type="primary" className="" onClick={this.addColumn}>
-                  Add New Role
-                </Button>
-              </ButtonWrapper>
-
-              
-              
-            </Box>
-          </Col> */}
         </Row>
       </LayoutWrapper>
     );

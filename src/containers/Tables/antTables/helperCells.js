@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import ImageCellView from './imageCell';
-import { Icon, Input, Popconfirm } from 'antd';
-
-const DateCell = data => <p>{data.toLocaleString()}</p>;
+import { Icon, Input, Popconfirm, Button, Modal } from 'antd';
+const { confirm } = Modal;
+const DateCell = data => <p>{new Date(data).toLocaleString()}</p>;
 const ImageCell = src => <ImageCellView src={src} />;
 const LinkCell = (link, href) => <a href={href ? href : '#'}>{link}</a>;
 const TextCell = text => <p>{text}</p>;
@@ -41,35 +41,71 @@ class EditableCell extends Component {
       <div className="isoEditData">
         {editable
           ? <div className="isoEditDataWrapper">
-              <Input
-                value={value}
-                onChange={this.handleChange}
-                onPressEnter={this.check}
-              />
-              <Icon type="check" className="isoEditIcon" onClick={this.check} />
-            </div>
+            <Input
+              value={value}
+              onChange={this.handleChange}
+              onPressEnter={this.check}
+            />
+            <Icon type="check" className="isoEditIcon" onClick={this.check} />
+          </div>
           : <p className="isoDataWrapper">
-              {value || ' '}
-              <Icon type="edit" className="isoEditIcon" onClick={this.edit} />
-            </p>}
+            {value || ' '}
+            <Icon type="edit" className="isoEditIcon" onClick={this.edit} />
+          </p>}
       </div>
     );
   }
 }
 class DeleteCell extends Component {
+
+  showDeleteConfirm = () => {
+    confirm({
+      title: 'Are you sure delete this role?',
+      content: 'When you delete can\'t be convert',
+      okText: 'Yes',
+      okType: 'danger',
+      cancelText: 'No',
+      onOk : () => {
+        this.props.onDeleteCell(this.props.index);
+      },
+      onCancel() {
+        console.log('Cancel');
+      },
+    });
+  }
   render() {
     const { index, onDeleteCell } = this.props;
     return (
-      <Popconfirm
-        title="Sure to delete?"
-        okText="DELETE"
-        cancelText="No"
-        onConfirm={() => onDeleteCell(index)}
-      >
-        <a>Delete</a>
-      </Popconfirm>
+      <Button onClick={this.showDeleteConfirm}>
+          <Icon style={{ fontSize: '16px', color: '#08c' }} type="delete" className="isoEditIcon" />
+        </Button>
+      // <Popconfirm
+      //   title="Sure to delete?"
+      //   okText="Yes"
+      //   cancelText="No"
+      //   placement="right"
+      //   onConfirm={() => onDeleteCell(index)}
+      // >
+        
+      // </Popconfirm>
     );
   }
 }
+
+// class UpdateCell extends Component {
+//   render() {
+//     const { index, onUpdateCell } = this.props;
+//     return (
+//       <Popconfirm
+//         title="Sure to delete?"
+//         okText="DELETE"
+//         cancelText="No"
+//         onConfirm={() => onUpdateCell(index)}
+//       >
+//         <a>Delete</a>
+//       </Popconfirm>
+//     );
+//   }
+// }
 
 export { DateCell, ImageCell, LinkCell, TextCell, EditableCell, DeleteCell };

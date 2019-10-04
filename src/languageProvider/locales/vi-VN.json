@@ -1,4 +1,6 @@
 {
+  "role.addnew" : "Thêm mới quyền",
+  "name" : "Tên",
   "sidebar.userManagement": "Quản lý người dùng",
   "sidebar.userManagement.role": "Phân quyền",
   "sidebar.userManagement.user": "Người dùng",
