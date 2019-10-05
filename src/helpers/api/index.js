@@ -1,7 +1,7 @@
 import { getToken } from "../utility";
 
-const BASE_URL = "https://swd-backend.hangnxoidiachauau.com/api";
-// const BASE_URL = "http://localhost:4000/api";
+// const BASE_URL = "https://swd-backend.hangnoidiachauau.com/api";
+const BASE_URL = "http://localhost:4000/api";
 export const GET = async (endpoint, params = {}, headers = {}, isAuth = false) => {
     if (isAuth) {
         headers["Authorization"] = `Bearer ${getToken()}`;

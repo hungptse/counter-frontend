@@ -315,7 +315,7 @@ class AppRouter extends React.Component {
         <Route
           exact
           path={`${url}/user`}
-          component={asyncComponent(() => import('../UserManagement/checkout'))}
+          component={asyncComponent(() => import('../UserManagement/user'))}
         />
         <Route component={NotFound} />
 

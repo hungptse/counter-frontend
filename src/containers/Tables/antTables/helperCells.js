@@ -77,7 +77,7 @@ class DeleteCell extends Component {
     const { index, onDeleteCell } = this.props;
     return (
       <Button onClick={this.showDeleteConfirm}>
-          <Icon style={{ fontSize: '16px', color: '#08c' }} type="delete" className="isoEditIcon" />
+          <Icon style={{ fontSize: '16px', color: '#08c' }} type="close" className="isoEditIcon" />
         </Button>
       // <Popconfirm
       //   title="Sure to delete?"

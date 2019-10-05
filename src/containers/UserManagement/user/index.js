@@ -103,8 +103,7 @@ class Role extends Component {
       visible: true,
       role: {},
       permissionChecked: [],
-      modalType: 'add',
-      name : ''
+      modalType: 'add'
     });
   };
   handleOk = async () => {
@@ -121,7 +120,7 @@ class Role extends Component {
         id: this.state.role.id,
         permissions: this.state.permissionChecked
       }, {}, {}, true).then(res => {
-        this.setState({ roles: this.state.roles.map(r => r.id === this.state.role.id ? res.data : r) })
+        // this.setState({ roles: [...this.state.roles, res.data] })
       });
     }
     setTimeout(() => {
@@ -167,7 +166,7 @@ class Role extends Component {
 
     return (
       <LayoutWrapper>
-        <PageHeader>Role</PageHeader>
+        <PageHeader>User</PageHeader>
         <Row style={rowStyle} gutter={gutter} justify="start">
           <Col md={24} sm={24} xs={24} style={colStyle}>
             <Box>
