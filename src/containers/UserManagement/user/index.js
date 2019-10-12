@@ -166,14 +166,14 @@ class Role extends Component {
 
     return (
       <LayoutWrapper>
-        <PageHeader>User</PageHeader>
+        <PageHeader>User Management</PageHeader>
         <Row style={rowStyle} gutter={gutter} justify="start">
           <Col md={24} sm={24} xs={24} style={colStyle}>
             <Box>
               <ContentHolder>
                 <ButtonWrapper>
                   <Button type="primary" onClick={this.addNewRole}>
-                    {<IntlMessages id="role.addnew" />}
+                    {<IntlMessages id="user.addnew" />}
                   </Button>
                 </ButtonWrapper>
                 <Modal

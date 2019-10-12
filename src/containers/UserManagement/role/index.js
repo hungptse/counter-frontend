@@ -167,7 +167,7 @@ class Role extends Component {
 
     return (
       <LayoutWrapper>
-        <PageHeader>Role</PageHeader>
+        <PageHeader>Role Management</PageHeader>
         <Row style={rowStyle} gutter={gutter} justify="start">
           <Col md={24} sm={24} xs={24} style={colStyle}>
             <Box>

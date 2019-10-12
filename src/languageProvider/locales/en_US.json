@@ -1,4 +1,5 @@
 {
+  "user.addnew" : "Add New User",
   "role.addnew" : "Add New Role",
   "name" : "Name",
   "sidebar.userManagement": "User Management",
