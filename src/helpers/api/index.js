@@ -2,7 +2,7 @@ import { getToken } from "../utility";
 
 // const BASE_URL = "https://swd-backend.hangnoidiachauau.com/api";
 const BASE_URL = "http://localhost:4000/api";
-export const GET = async (endpoint, params = {}, headers = {}, isAuth = false) => {
+export const GET = async (endpoint, params = {}, headers = {} ,isAuth = false) => {
     if (isAuth) {
         headers["Authorization"] = `Bearer ${getToken()}`;
     }
@@ -51,6 +51,7 @@ export const DELETE = async (endpoint, body = {}, params = {}, headers = {}, isA
 export const ENDPOINT = {
     AUTH__LOGIN: "/auth/login",
     ALL_ROLE: '/role',
-    ALL_PERMISSION: '/permission'
-
+    ALL_PERMISSION: '/permission',
+    ALL_USER : '/user',
+    STORE_OF_USER : '/user_store'
 }

@@ -339,7 +339,7 @@ export default class IsoWidgets extends Component {
           <Col md={8} sm={12} xs={24} style={colStyle}>
             <IsoWidgetsWrapper>
               {/* VCard Widget */}
-              <VCardWidget
+              {/* <VCardWidget
                 style={{ height: '450px' }}
                 src={userpic}
                 alt="Jhon"
@@ -376,7 +376,7 @@ export default class IsoWidgets extends Component {
                     iconcolor="#ea4c89"
                   />
                 </SocialWidget>
-              </VCardWidget>
+              </VCardWidget> */}
             </IsoWidgetsWrapper>
           </Col>
         </Row>

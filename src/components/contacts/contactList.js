@@ -4,7 +4,6 @@ import { InputSearch } from '../uielements/input';
 import DeleteButton from './deleteButton';
 import { PropTypes } from 'prop-types';
 import { ContactListWrapper } from './contactList.style';
-
 function filterContacts(contacts, search) {
   search = search.toUpperCase();
   return search
@@ -28,16 +27,13 @@ export default class ContactList extends Component {
     return (
       <div
         key={contact.id}
-        className={`${activeClass} isoSingleContact`}
+        className={`${activeClass} isoSingleContact isoVCardBody`}
         onClick={onChange}
       >
-        <div className="isoAvatar">
+        {/* <div className="isoAvatar">
           {contact.avatar ? <img alt="#" src={contact.avatar} /> : ''}
-        </div>
-        <div className="isoContactName">
-          <h3>{contact.name ? contact.name : 'No Name'}</h3>
-        </div>
-        <DeleteButton deleteContact={deleteContact} contact={contact} />
+        </div> */}
+          <div className="isoName">{contact.name ? contact.name : 'No Name'}</div>
       </div>
     );
   }
@@ -50,9 +46,7 @@ export default class ContactList extends Component {
     return (
       <ContactListWrapper className="isoContactListWrapper">
         <InputSearch
-          placeholder={this.context.intl.formatMessage({
-            id: 'contactlist.searchContacts'
-          })}
+          placeholder={"Search user..."}
           value={search}
           onChange={this.onChange}
           className="isoSearchBar"
@@ -62,10 +56,10 @@ export default class ContactList extends Component {
             {contacts.map(contact => this.singleContact(contact))}
           </div>
         ) : (
-          <span className="isoNoResultMsg">
-            {<IntlMessages id="Component.contacts.noOption" />}
-          </span>
-        )}
+            <span className="isoNoResultMsg">
+              {<IntlMessages id="Component.contacts.noOption" />}
+            </span>
+          )}
       </ContactListWrapper>
     );
   }

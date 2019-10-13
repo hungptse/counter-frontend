@@ -21,11 +21,15 @@ const {
 
 const { Content } = Layout;
 class Contacts extends Component {
+  state = {
+    editView : false
+  }
   render() {
+    const { editView } = this.state
     const {
       contacts,
       seectedId,
-      editView,
+      // editView,
       changeContact,
       addContact,
       editContact,
@@ -35,7 +39,9 @@ class Contacts extends Component {
     const selectedContact = seectedId
       ? contacts.filter(contact => contact.id === seectedId)[0]
       : null;
-    const onVIewChange = () => viewChange(!editView);
+    const onVIewChange = () => {
+      this.setState({ editView : true })
+    }
     return (
       <ContactsWrapper
         className="isomorphicContacts"
@@ -56,10 +62,6 @@ class Contacts extends Component {
                 <Button type="button" onClick={onVIewChange}>
                   {editView ? <Icon type="check" /> : <Icon type="edit" />}{' '}
                 </Button>
-                <DeleteButton
-                  deleteContact={deleteContact}
-                  contact={selectedContact}
-                />
                 <Button
                   type="primary"
                   onClick={addContact}
@@ -68,18 +70,10 @@ class Contacts extends Component {
                   <IntlMessages id="contactlist.addNewContact" />
                 </Button>
               </div>
-              {editView ? (
-                <EditContactView
+              <SingleContactView
                   contact={selectedContact}
-                  editContact={editContact}
-                  otherAttributes={otherAttributes}
+                  // otherAttributes={otherAttributes}
                 />
-              ) : (
-                <SingleContactView
-                  contact={selectedContact}
-                  otherAttributes={otherAttributes}
-                />
-              )}
             </Content>
           ) : (
             <div className="isoContactControl">

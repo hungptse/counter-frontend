@@ -119,7 +119,8 @@ class Role extends Component {
     } else if (this.state.modalType === 'edit') {
       await PUT(ENDPOINT.ALL_ROLE, {
         id: this.state.role.id,
-        permissions: this.state.permissionChecked
+        permissions: this.state.permissionChecked,
+        name : this.state.name
       }, {}, {}, true).then(res => {
         this.setState({ roles: this.state.roles.map(r => r.id === this.state.role.id ? res.data : r) })
       });
