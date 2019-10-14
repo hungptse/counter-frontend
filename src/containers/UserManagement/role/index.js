@@ -36,7 +36,7 @@ class Role extends Component {
       permissions: [],
       role: {},
       permissionChecked: [],
-      name: ''
+      name: '',
     };
 
 
@@ -179,6 +179,7 @@ class Role extends Component {
                   </Button>
                 </ButtonWrapper>
                 <Modal
+                  maskClosable={false}
                   visible={this.state.visible}
                   title="New Role"
                   onOk={this.handleOk}

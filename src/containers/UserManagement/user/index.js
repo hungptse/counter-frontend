@@ -14,35 +14,38 @@ import ContentHolder from '../../../components/utility/contentHolder';
 import basicStyle from '../../../config/basicStyle';
 import { ButtonWrapper } from '../../../components/card/cardModal.style';
 import { GET, ENDPOINT } from '../../../helpers/api';
+import InputBox from '../../../components/utility/input-box';
 
 const { Content } = Layout;
 const { confirm } = Modal;
 class Contacts extends Component {
-  state = { users: [], selectedContact: {} }
+  state = { users: [], selectedContact: {}, roles : [] }
   async componentDidMount() {
     await GET(ENDPOINT.ALL_USER, {}, {}, true).then(res => {
       this.setState({ users: res.data.user })
     });
-  }
-
-  showDeleteConfirm = () => {
-    confirm({
-      title: 'Are you sure delete this role?',
-      content: 'When you delete can\'t be convert',
-      okText: 'Yes',
-      okType: 'danger',
-      cancelText: 'No',
-      onOk: async () => {
-        console.log("OK");
-      },
-      onCancel() {
-        console.log('Cancel');
-      },
+    await GET(ENDPOINT.ALL_ROLE, {}, {}, true).then(res => {
+      this.setState({ roles: res.data.roles })
     });
   }
-
   changeContact = (id) => {
     this.setState({ selectedContact: this.state.users.filter(user => user.id === id)[0] })
+  }
+
+  addNewRole = async () => {
+    // await this.getAllPermission();
+    this.setState({
+      visible: true
+    });
+  };
+
+  handleOk = () => {
+    console.log(this.state);
+    
+  }
+
+  handleCancel = () => {
+    this.setState({ visible: false });
   }
 
   render() {
@@ -61,6 +64,79 @@ class Contacts extends Component {
                     Add New User
                   </Button>
                 </ButtonWrapper>
+                <Modal
+                  visible={this.state.visible}
+                  title="New User"
+                  onOk={this.handleOk}
+                  onCancel={this.handleCancel}
+                  maskClosable={false}
+                  footer={[
+                    <Button key="back" size="large" onClick={this.handleCancel}>
+                      Return
+                    </Button>,
+                    <Button
+                      key="submit"
+                      type="primary"
+                      size="large"
+                      loading={this.state.loading}
+                      onClick={this.handleOk}
+                    >
+                      Submit
+                    </Button>,
+                  ]}
+                >
+                  <div className="isoInputFieldset vertical" style={{ marginBottom: "5%" }}>
+                    <InputBox
+                      label="Username"
+                      placeholder="Admin/Staff/..."
+                      value={this.state.username}
+                      required
+                      onChange={(e) => this.setState({ username: e.target.value })}
+                    />
+                  </div>
+                  <div className="isoInputFieldset vertical" style={{ marginBottom: "5%" }}>
+                    <InputBox
+                      label="Fullname"
+                      placeholder="Admin/Staff/..."
+                      value={this.state.name}
+                      required
+                      onChange={(e) => this.setState({ name: e.target.value })}
+                    />
+                  </div><div className="isoInputFieldset vertical" style={{ marginBottom: "5%" }}>
+                    <InputBox
+                      label="Phone Number"
+                      placeholder="Admin/Staff/..."
+                      value={this.state.phone}
+                      required
+                      onChange={(e) => this.setState({ phone: e.target.value })}
+                    />
+                  </div><div className="isoInputFieldset vertical" style={{ marginBottom: "5%" }}>
+                    <InputBox
+                      label={"Email"}
+                      placeholder="Admin/Staff/..."
+                      value={this.state.email}
+                      required
+                      onChange={(e) => this.setState({ email: e.target.value })}
+                    />
+                  </div>
+                  <div className="isoInputFieldset vertical" style={{ marginBottom: "5%" }}>
+                    <InputBox
+                      label={"Role"}
+                      value={this.state.role}
+                      required
+                      onChange={(e) => this.setState({ role: e.target.value })}
+                    />
+                  </div>
+                  <div className="isoInputFieldset vertical" style={{ marginBottom: "5%" }}>
+                    <InputBox
+                      label={"Store"}
+                      placeholder="Admin/Staff/..."
+                      value={this.state.store}
+                      required
+                      onChange={(e) => this.setState({ store: e.target.value })}
+                    />
+                  </div>
+                </Modal>
                 <ContactsWrapper
                 // className="isomorphicContacts"
                 // style={{ background: 'none' }}
