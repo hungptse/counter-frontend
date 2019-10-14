@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Layout, Icon, Row, Col, Empty } from 'antd';
+import { Layout, Icon, Row, Col, Empty, Modal } from 'antd';
 import Button from '../../../components/uielements/button';
 import ContactList from '../../../components/contacts/contactList';
 import SingleContactView from '../../../components/contacts/singleView';
@@ -16,18 +16,35 @@ import { ButtonWrapper } from '../../../components/card/cardModal.style';
 import { GET, ENDPOINT } from '../../../helpers/api';
 
 const { Content } = Layout;
+const { confirm } = Modal;
 class Contacts extends Component {
-  state = { users : [], selectedContact : {} }
+  state = { users: [], selectedContact: {} }
   async componentDidMount() {
-    await GET(ENDPOINT.ALL_USER,{},{},true).then(res => {
-      this.setState({ users : res.data.user })
+    await GET(ENDPOINT.ALL_USER, {}, {}, true).then(res => {
+      this.setState({ users: res.data.user })
+    });
+  }
+
+  showDeleteConfirm = () => {
+    confirm({
+      title: 'Are you sure delete this role?',
+      content: 'When you delete can\'t be convert',
+      okText: 'Yes',
+      okType: 'danger',
+      cancelText: 'No',
+      onOk: () => {
+        console.log("OK");
+      },
+      onCancel() {
+        console.log('Cancel');
+      },
     });
   }
 
   changeContact = (id) => {
-    this.setState({ selectedContact : this.state.users.filter(user => user.id === id)[0] })
+    this.setState({ selectedContact: this.state.users.filter(user => user.id === id)[0] })
   }
-  
+
   render() {
     const { rowStyle, colStyle, gutter } = basicStyle;
     const {
@@ -39,7 +56,7 @@ class Contacts extends Component {
       deleteContact,
       viewChange
     } = this.props;
-  
+
     const onVIewChange = () => viewChange(!editView);
     const { users, selectedContact } = this.state
     return (
@@ -48,7 +65,7 @@ class Contacts extends Component {
         <Row style={rowStyle} gutter={gutter} justify="start">
           <Col md={24} sm={24} xs={24} style={colStyle}>
             <Box>
-            <ContentHolder>
+              <ContentHolder>
                 <ButtonWrapper>
                   <Button type="primary" onClick={this.addNewRole}>
                     {/* {<IntlMessages id="role.addnew" />} */}
@@ -56,42 +73,42 @@ class Contacts extends Component {
                   </Button>
                 </ButtonWrapper>
                 <ContactsWrapper
-        // className="isomorphicContacts"
-        // style={{ background: 'none' }}
-      >
-        <div className="isoContactListBar">
-          <ContactList
-            contacts={users}
-            // seectedId={seectedId}
-            changeContact={this.changeContact}
-            // deleteContact={deleteContact}
-          />
-        </div>
-        <Layout className="isoContactBoxWrapper">
-          {Object.keys(selectedContact).length != 0 ? (
-            <Content className="isoContactBox">
-              <div className="isoContactControl">
-                {/* <Button type="button" onClick={onVIewChange}>
+                // className="isomorphicContacts"
+                // style={{ background: 'none' }}
+                >
+                  <div className="isoContactListBar">
+                    <ContactList
+                      contacts={users}
+                      // seectedId={seectedId}
+                      changeContact={this.changeContact}
+                    // deleteContact={deleteContact}
+                    />
+                  </div>
+                  <Layout className="isoContactBoxWrapper">
+                    {Object.keys(selectedContact).length != 0 ? (
+                      <Content className="isoContactBox">
+                        <div className="isoContactControl">
+                          {/* <Button type="button" onClick={onVIewChange}>
                   {editView ? <Icon type="check" /> : <Icon type="edit" />}{' '}
                 </Button> */}
-                {/* <DeleteButton
+                          {/* <DeleteButton
                   deleteContact={deleteContact}
                   contact={selectedContact}
                 /> */}
-              </div>
-              <SingleContactView
-                  contact={selectedContact}
-                  // otherAttributes={otherAttributes}
-                />
-             
-            </Content>
-          ) : (
-            <Empty description={false} />
-          )}
-        </Layout>
-      </ContactsWrapper>
-            </ContentHolder>
-       
+                        </div>
+                        <SingleContactView
+                          contact={selectedContact}
+                        // otherAttributes={otherAttributes}
+                        />
+
+                      </Content>
+                    ) : (
+                        <Empty description={false} />
+                      )}
+                  </Layout>
+                </ContactsWrapper>
+              </ContentHolder>
+
             </Box>
           </Col>
         </Row>

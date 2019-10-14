@@ -92,6 +92,8 @@ class DeleteCell extends Component {
   }
 }
 
+
+
 // class UpdateCell extends Component {
 //   render() {
 //     const { index, onUpdateCell } = this.props;

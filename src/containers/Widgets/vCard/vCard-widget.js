@@ -13,6 +13,7 @@ import Buttons from '../../../components/uielements/button';
 import Timeline, {
   TimelineItem,
 } from '../../../components/uielements/timeline';
+import { timeDifference } from '../../../helpers/utility';
 const Button = Buttons;
 export default class VCardWidget extends Component {
   state = { roles: [], selectedRole: {}, user_stores: [] };
@@ -24,7 +25,9 @@ export default class VCardWidget extends Component {
 
     await POST(ENDPOINT.STORE_OF_USER + `/${this.props.user.id}`, {}, {}, {
     }, true).then(res => {
-      this.setState({ user_stores: res.data.user_store });
+      if (res.status === 2000) {
+        this.setState({ user_stores: res.data.user_store });
+      }
     });
   }
 
@@ -68,13 +71,13 @@ export default class VCardWidget extends Component {
           <Descriptions title="User Info" bordered>
             <Descriptions.Item label="Fullname">{user.name}</Descriptions.Item>
             <Descriptions.Item label="Gender">{user.gender == 1 ? 'Male' : 'Female'}</Descriptions.Item>
-            <Descriptions.Item label="Created At">{user.createdAt}</Descriptions.Item>
+            <Descriptions.Item label="Created At">{timeDifference(user.createdAt)}</Descriptions.Item>
             <Descriptions.Item label="Address">{user.address}</Descriptions.Item>
             <Descriptions.Item label="Phone number">{user.phone_number}</Descriptions.Item>
             <Descriptions.Item label="Status">
               <Badge status="processing" text="Active" />
             </Descriptions.Item>
-            <Descriptions.Item label="Store working" span={3}>{this.state.user_stores.map(us => (<Tag color="#108ee9">{us.stores.name}</Tag>))}</Descriptions.Item>
+            <Descriptions.Item label="Store working" span={3}>{this.state.user_stores.length !== 0 ? this.state.user_stores.map(us => (<Tag color="#108ee9">{us.stores.name}</Tag>)) : "This user not working any store"}</Descriptions.Item>
           </Descriptions>
         </Card>
       </div>

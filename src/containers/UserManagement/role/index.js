@@ -156,7 +156,7 @@ class Role extends Component {
               } else {
                 return (<TreeNode title={p.displayName} key={p.name} >
                   {p.child.map(c => {
-                    return (<TreeNode title={c.displayName} key={c.name} />)
+                      return (<TreeNode title={c.displayName} key={c.name} />)
                   })}
                 </TreeNode>)
               }
