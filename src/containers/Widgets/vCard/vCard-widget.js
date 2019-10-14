@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { VCardWidgetWrapper } from './style';
-import { GET, ENDPOINT, POST } from '../../../helpers/api';
+import { GET, ENDPOINT, POST, PUT } from '../../../helpers/api';
 import { rtl } from '../../../config/withDirection';
 import Dropdown, {
   DropdownButtons,
@@ -8,12 +8,12 @@ import Dropdown, {
   MenuItem,
   SubMenu
 } from '../../../components/uielements/dropdown';
-import { Icon, Card, Descriptions, Badge, Tag } from 'antd';
+import { Icon, Card, Descriptions, Badge, Tag, Modal, message } from 'antd';
 import Buttons from '../../../components/uielements/button';
-import Timeline, {
-  TimelineItem,
-} from '../../../components/uielements/timeline';
 import { timeDifference } from '../../../helpers/utility';
+
+const { confirm } = Modal;
+
 const Button = Buttons;
 export default class VCardWidget extends Component {
   state = { roles: [], selectedRole: {}, user_stores: [] };
@@ -32,12 +32,35 @@ export default class VCardWidget extends Component {
   }
 
   handleMenuClickToLink = e => {
-    this.setState({ selectedRole: this.state.roles.find(r => r.id == e.key) })
-
+    if (e.key != this.state.selectedRole.id) {
+      confirm({
+        title: 'Are you sure change role for this user?',
+        content: 'This action could affect to system',
+        okText: 'Yes',
+        okType: 'danger',
+        cancelText: 'No',
+        onOk: async () => {
+          await PUT(ENDPOINT.USER_ROLE, {
+            role_id: e.key,
+            user_id: this.props.user.id
+          }, {}, {}, true).then(res => {
+            if (res.status === 200) {
+              message.success(res.message);
+              this.setState({ selectedRole: this.state.roles.find(r => r.id == e.key) })
+            } else {
+              message.warning(res.message);
+            }
+          })
+        },
+        onCancel() {
+          console.log('Cancel');
+        },
+      });
+    }
   };
 
   render() {
-    const { src, alt, user, style } = this.props;
+    const { user, style } = this.props;
     const { roles, selectedRole } = this.state
     const menuClicked = (
       <DropdownMenu onClick={this.handleMenuClickToLink}>

@@ -53,5 +53,6 @@ export const ENDPOINT = {
     ALL_ROLE: '/role',
     ALL_PERMISSION: '/permission',
     ALL_USER : '/user',
-    STORE_OF_USER : '/user_store'
+    STORE_OF_USER : '/user_store',
+    USER_ROLE : '/user/role',
 }

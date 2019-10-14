@@ -32,7 +32,7 @@ class Contacts extends Component {
       okText: 'Yes',
       okType: 'danger',
       cancelText: 'No',
-      onOk: () => {
+      onOk: async () => {
         console.log("OK");
       },
       onCancel() {
@@ -47,17 +47,6 @@ class Contacts extends Component {
 
   render() {
     const { rowStyle, colStyle, gutter } = basicStyle;
-    const {
-      contacts,
-      // seectedId,
-      editView,
-      addContact,
-      editContact,
-      deleteContact,
-      viewChange
-    } = this.props;
-
-    const onVIewChange = () => viewChange(!editView);
     const { users, selectedContact } = this.state
     return (
       <LayoutWrapper>
