@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import { Popover } from 'antd';
+import { Popover, message } from 'antd';
 import { connect } from 'react-redux';
 import IntlMessages from '../utility/intlMessages';
 import TopbarDropdownWrapper from './topbarDropdown.style';
+import Input from '../uielements/input';
+import { POST, ENDPOINT } from '../../helpers/api';
 
 const demoNotifications = [
   {
@@ -40,6 +42,17 @@ class TopbarNotification extends Component {
       visible: false
     };
   }
+  sendNotification = async () => {
+    await POST(ENDPOINT.NOTIFICATION, {
+      message: this.state.message
+    }, {}, {}, true).then(res => {
+      if (res.status == 200) {
+        this.setState({ message: "" })
+        message.success("Send sucessfully");
+        this.setState({ visible: false });
+      }
+    })
+  }
   hide() {
     this.setState({ visible: false });
   }
@@ -56,15 +69,30 @@ class TopbarNotification extends Component {
           </h3>
         </div>
         <div className="isoDropdownBody">
-          {demoNotifications.map(notification => (
+          {/* {demoNotifications.map(notification => (
             <a className="isoDropdownListItem" key={notification.id}>
               <h5>{notification.name}</h5>
               <p>{notification.notification}</p>
             </a>
-          ))}
+          ))} */}
+          <a className="isoDropdownListItem">
+            <h5>Message Content</h5>
+            <Input size="large" value={this.state.message} onChange={(e) => this.setState({ message: e.target.value })} />
+
+            {/* <p>{notification.notification}</p> */}
+          </a>
+          {/* <div className="isoInputFieldset vertical" style={{ marginBottom: "5%" }}>
+            <InputBox
+              label="Fullname"
+              placeholder="Thanh Hung"
+              value={this.state.name}
+              required
+              onChange={(e) => this.setState({ name: e.target.value })}
+            />
+          </div> */}
         </div>
-        <a className="isoViewAllBtn">
-          <IntlMessages id="topbar.viewAll" />
+        <a className="isoViewAllBtn" onClick={this.sendNotification}>
+          Send To All
         </a>
       </TopbarDropdownWrapper>
     );
@@ -81,7 +109,6 @@ class TopbarNotification extends Component {
             className="ion-android-notifications"
             style={{ color: customizedTheme.textColor }}
           />
-          <span>{demoNotifications.length}</span>
         </div>
       </Popover>
     );
