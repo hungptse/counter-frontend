@@ -25,71 +25,40 @@ import { DropdownMenu, MenuItem } from '../../../components/uielements/dropdown'
 
 const isoModal = ModalStyle(Modals);
 const Modal = WithDirection(isoModal);
+
 class Company extends Component {
   constructor(props) {
     super(props);
 
-    this.columns = createColumns(this.editStore, this.deleteRole);
+    this.columns = createColumns(this.editCompany, this.deleteRole);
     this.state = {
       stores: [],
       companies: [],
-      selectedCompany: {},
+      selectedCity: {},
       name: '',
-      modalType : ''
+      modalType: ''
     };
 
 
   }
 
   async componentDidMount() {
-    await GET(ENDPOINT.ALL_STORE, {}, {}, true).then(res => {
-      this.setState({ stores: res.data.items })
-    });
     await this.getAllCompanies();
   }
 
 
-  editStore = async (store) => {
+  editCompany = async (company) => {
     await this.getAllCompanies();
     this.setState({
       visible: true,
       modalType: 'edit',
-      selectedCompany: this.state.companies.find(c => c.id == store.company_id),
-      address: store.address,
-      name: store.name,
+      // selectedCity: cities.find(c => c.id == company.id),
+      address: company.address,
+      name: company.name,
+      company : company
     });
   }
-  // deleteRole = async (role) => {
-  //   this.setState({
-  //     roles: this.state.roles.filter(r => r.id !== role.id)
-  //   })
-  //   await DELETE(ENDPOINT.ALL_ROLE, {
-  //     id: role.id
-  //   }, {}, {}, true);
-  // }
-  // addColumn = () => {
-  //   this.setState({
-  //     editView: true,
-  //     role: {
-  //       id: new Date().getTime(),
-  //       key: new Date().getTime(),
-  //       number: '',
-  //       name: '',
-  //       expiry: '',
-  //       cvc: '',
-  //     },
-  //     modalType: 'add',
-  //   });
-  // }
-  // handleCancel = () => {
-  //   this.setState({
-  //     editView: false,
-  //     selectedCard: null,
-  //   });
-  // }
-  // updateCard(selectedCard) {
-  //   this.setState({ selectedCard });
-  // }
+
   getAllCompanies = async () => {
     if (this.state.companies.length === 0) {
       await GET(ENDPOINT.COMPANY, {}, {}, true).then(res => {
@@ -97,36 +66,32 @@ class Company extends Component {
       });
     }
   }
-  handleMenuClickToLink = e => {
-    this.setState({ selectedCompany : e.key != this.state.selectedCompany.id ? this.state.companies.find(r => r.id == e.key) : this.state.selectedCompany })
-  }
+ 
   addNewStore = async () => {
     await this.getAllCompanies();
     this.setState({
       visible: true,
       name: '',
-      selectedCompany : this.state.companies[0],
-      address : '',
-      modalType : 'add'
+      selectedCompany: this.state.companies[0],
+      address: '',
+      modalType: 'add'
     });
   };
   handleOk = async () => {
     this.setState({ loading: true });
     if (this.state.modalType === 'add') {
-      await POST(ENDPOINT.ALL_STORE, {
+      await POST(ENDPOINT.COMPANY , {
         name: this.state.name,
-        address : this.state.address,
-        company_id: this.state.selectedCompany.id
+        address: this.state.address,
       }, {}, {}, true).then(res => {
-        this.setState({ stores: [...this.state.stores, res.data] })
+        this.setState({ companies: [...this.state.companies, res.data] })
       });
     } else if (this.state.modalType === 'edit') {
-      await PUT(ENDPOINT.ALL_STORE, {
-        id: this.state.role.id,
-        permissions: this.state.permissionChecked,
-        name: this.state.name
+      await PUT(`${ENDPOINT.COMPANY}/${this.state.company.id}`, {
+        name: this.state.name,
+        address: this.state.address,
       }, {}, {}, true).then(res => {
-        this.setState({ roles: this.state.roles.map(r => r.id === this.state.role.id ? res.data : r) })
+        this.setState({ companies: this.state.companies.map(r => r.id === this.state.company.id ? res.data : r) })
       });
     }
     setTimeout(() => {
@@ -139,75 +104,64 @@ class Company extends Component {
 
   render() {
     const { rowStyle, colStyle, gutter } = basicStyle;
-    const { stores, selectedCompany, companies } = this.state;
-
-    const menuClicked = (
-      <DropdownMenu onClick={this.handleMenuClickToLink}>
-          {companies.map(c => (<MenuItem key={c.id}>{c.name}</MenuItem>))}
-      </DropdownMenu>
-    );
-
+    const { stores, selectedCity, companies } = this.state;
     return (
       <div>
         <PageHeader>Company Management</PageHeader>
-          <Row style={rowStyle} gutter={gutter} justify="start">
-            <Col md={24} sm={24} xs={24} style={colStyle}>
-              <Box>
-                <ContentHolder>
-                  <ButtonWrapper>
-                    <Button type="primary" onClick={this.addNewStore}>
-                      Add new company
+        <Row style={rowStyle} gutter={gutter} justify="start">
+          <Col md={24} sm={24} xs={24} style={colStyle}>
+            <Box>
+              <ContentHolder>
+                <ButtonWrapper>
+                  <Button type="primary" onClick={this.addNewStore}>
+                    Add new company
                       </Button>
-                  </ButtonWrapper>
-                  <Modal
-                    maskClosable={false}
-                    visible={this.state.visible}
-                    title="New Store"
-                    onOk={this.handleOk}
-                    onCancel={this.handleCancel}
-                    footer={[
-                      <Button key="back" size="large" onClick={this.handleCancel}>
-                        Return
+                </ButtonWrapper>
+                <Modal
+                  maskClosable={false}
+                  visible={this.state.visible}
+                  title={this.state.modalType === "add" ? "New Company" : "Update Company"}
+                  onOk={this.handleOk}
+                  onCancel={this.handleCancel}
+                  footer={[
+                    <Button key="back" size="large" onClick={this.handleCancel}>
+                      Return
                     </Button>,
-                      <Button
-                        key="submit"
-                        type="primary"
-                        size="large"
-                        loading={this.state.loading}
-                        onClick={this.handleOk}
-                      >
-                        Submit
+                    <Button
+                      key="submit"
+                      type="primary"
+                      size="large"
+                      loading={this.state.loading}
+                      onClick={this.handleOk}
+                    >
+                      Submit
                     </Button>,
-                    ]}
-                  >
-                    <div className="isoInputFieldset vertical" style={{ marginBottom: "5%" }}>
-                      <InputBox
-                        label={<IntlMessages id="name" />}
-                        placeholder="7-11 at FU"
-                        value={this.state.name}
-                        required
-                        onChange={(e) => this.setState({ name: e.target.value })}
-                      />
-                    </div>
-                    <div className="isoInputFieldset vertical" style={{ marginBottom: "5%" }}>
-                      <InputBox
-                        label={"Address"}
-                        placeholder="FPT Univeristy, District 9, HCM"
-                        value={this.state.address}
-                        required
-                        onChange={(e) => this.setState({ address: e.target.value })}
-                      />
-                    </div>
-                    <div className="isoInputFieldset vertical" style={{ marginBottom: "5%" }}>
-                      <DropdownBox label={"Company"} menuClicked={menuClicked} value={selectedCompany.name} />
-                    </div>
-
-                  </Modal>
-                  <SimpleTable columns={this.columns} dataSource={stores} />
-                </ContentHolder>
-              </Box>
-            </Col>
-          </Row>
+                  ]}
+                >
+                  <div className="isoInputFieldset vertical" style={{ marginBottom: "5%" }}>
+                    <InputBox
+                      label={<IntlMessages id="name" />}
+                      placeholder="7-11 at FU"
+                      value={this.state.name}
+                      required
+                      onChange={(e) => this.setState({ name: e.target.value })}
+                    />
+                  </div>
+                  <div className="isoInputFieldset vertical" style={{ marginBottom: "5%" }}>
+                    <InputBox
+                      label={"Address"}
+                      placeholder="FPT Univeristy, District 9, HCM"
+                      value={this.state.address}
+                      required
+                      onChange={(e) => this.setState({ address: e.target.value })}
+                    />
+                  </div>
+                </Modal>
+                <SimpleTable columns={this.columns} dataSource={companies} />
+              </ContentHolder>
+            </Box>
+          </Col>
+        </Row>
       </div>
     );
   }

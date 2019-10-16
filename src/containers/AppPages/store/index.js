@@ -26,6 +26,22 @@ import Company from '../company';
 
 const isoModal = ModalStyle(Modals);
 const Modal = WithDirection(isoModal);
+
+const cities = [{
+  id: 1,
+  value : 'HN',
+  name: "Ha Noi"
+},
+{
+  id: 2,
+  value : 'DN',
+  name: "Da Nang"
+},
+{
+  id: 3,
+  value : 'SG',
+  name: "Sai Gon"
+}]
 class Store extends Component {
   constructor(props) {
     super(props);
@@ -37,7 +53,8 @@ class Store extends Component {
       selectedCompany: {},
       name: '',
       modalType: '',
-      store : {}
+      store: {},
+      selectedCity : cities[0]
     };
 
 
@@ -57,9 +74,9 @@ class Store extends Component {
       visible: true,
       modalType: 'edit',
       selectedCompany: this.state.companies.find(c => c.id == store.company_id),
-      store : store,
-      name : store.name,
-      address : store.address
+      store: store,
+      name: store.name,
+      address: store.address
     });
   }
   getAllCompanies = async () => {
@@ -88,7 +105,8 @@ class Store extends Component {
       await POST(ENDPOINT.ALL_STORE, {
         name: this.state.name,
         address: this.state.address,
-        company_id: this.state.selectedCompany.id
+        company_id: this.state.selectedCompany.id,
+        city : this.state.selectedCity.value
       }, {}, {}, true).then(res => {
         this.setState({ stores: [...this.state.stores, res.data] })
       });
@@ -96,7 +114,8 @@ class Store extends Component {
       await PUT(`${ENDPOINT.ALL_STORE}/${this.state.store.id}`, {
         name: this.state.name,
         address: this.state.address,
-        company_id: this.state.selectedCompany.id
+        company_id: this.state.selectedCompany.id,
+        city : this.state.selectedCity.value
       }, {}, {}, true).then(res => {
         this.setState({ stores: this.state.stores.map(r => r.id === this.state.store.id ? res.data : r) })
       });
@@ -109,9 +128,19 @@ class Store extends Component {
     this.setState({ visible: false });
   };
 
+  handleMenuClickToLinkCity = e => {
+    this.setState({ selectedCity: e.key != this.state.selectedCity.id ? cities.find(r => r.id == e.key) : this.state.selectedCity })
+  }
+
   render() {
     const { rowStyle, colStyle, gutter } = basicStyle;
-    const { stores, selectedCompany, companies } = this.state;
+    const { stores, selectedCompany, companies, selectedCity } = this.state;
+
+    const menuClickedCity = (
+      <DropdownMenu onClick={this.handleMenuClickToLinkCity}>
+        {cities.map(c => (<MenuItem key={c.id}>{c.name}</MenuItem>))}
+      </DropdownMenu>
+    );
 
     const menuClicked = (
       <DropdownMenu onClick={this.handleMenuClickToLink}>
@@ -183,7 +212,9 @@ class Store extends Component {
                     <div className="isoInputFieldset vertical" style={{ marginBottom: "5%" }}>
                       <DropdownBox label={"Company"} menuClicked={menuClicked} value={selectedCompany.name} />
                     </div>
-
+                    <div className="isoInputFieldset vertical" style={{ marginBottom: "5%" }}>
+                      <DropdownBox label={"City"} menuClicked={menuClickedCity} value={selectedCity.name} />
+                    </div>
                   </Modal>
                   <SimpleTable columns={this.columns} dataSource={stores} />
                 </ContentHolder>

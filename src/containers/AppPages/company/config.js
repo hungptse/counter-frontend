@@ -20,17 +20,6 @@ function createColumns(editColumn, deleteColumn) {
       rowKey: 'address'
     },
     {
-      title: 'Company',
-      dataIndex: 'company_name',
-      rowKey: 'company_name'
-    },
-    {
-      title: 'City',
-      dataIndex: 'city',
-      rowKey: 'city',
-      render: value => <p>{value == 'DN' ? "Da Nang" : value == 'SG' ? "Sai Gon" : "Ha Noi"}</p>
-    },
-    {
       title: 'Created At',
       dataIndex: 'createdAt',
       render: value => <p>{new Date(value).toLocaleString()}</p>
