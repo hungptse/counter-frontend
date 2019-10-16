@@ -56,5 +56,6 @@ export const ENDPOINT = {
     STORE_OF_USER : '/user_store',
     USER_ROLE : '/user/role',
     ALL_STORE : '/store',
-    NOTIFICATION : '/notification'
+    NOTIFICATION : '/notification',
+    COMPANY : '/company'
 }

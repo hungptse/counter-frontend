@@ -304,18 +304,18 @@ class AppRouter extends React.Component {
         />
         <Route
           exact
-          path={`${url}/frappeChart`}
-          component={asyncComponent(() => import('../Charts/frappeChart'))}
+          path={`${url}/store`}
+          component={asyncComponent(() => import('../AppPages/store'))}
         />
         <Route
           exact
           path={`${url}/role`}
-          component={asyncComponent(() => import('../UserManagement/role'))}
+          component={asyncComponent(() => import('../AppPages/role'))}
         />
         <Route
           exact
           path={`${url}/user`}
-          component={asyncComponent(() => import('../UserManagement/user'))}
+          component={asyncComponent(() => import('../AppPages/user'))}
         />
         <Route component={NotFound} />
 

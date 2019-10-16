@@ -88,15 +88,7 @@ class Contacts extends Component {
         {roles.map(role => (<MenuItem key={role.id}>{role.name}</MenuItem>))}
       </DropdownMenu>
     );
-    const mockData = [];
-    for (let i = 0; i < 20; i++) {
-      mockData.push({
-        key: i.toString(),
-        title: `content${i + 1}`,
-        description: `description of content${i + 1}`,
-        disabled: i % 3 < 1,
-      });
-    }
+    
     return (
       <LayoutWrapper>
         <PageHeader>User Management</PageHeader>

@@ -5,10 +5,10 @@ import appActions from '../../redux/app/actions';
 import TopbarWrapper from './topbar.style';
 import {
   TopbarNotification,
-  TopbarMessage,
-  TopbarSearch,
+  // TopbarMessage,
+  // TopbarSearch,
   TopbarUser,
-  TopbarAddtoCart,
+  // TopbarAddtoCart,
 } from '../../components/topbar';
 
 const { Header } = Layout;
@@ -42,16 +42,16 @@ class Topbar extends Component {
           </div>
 
           <ul className="isoRight">
-            <li className="isoSearch">
+            {/* <li className="isoSearch">
               <TopbarSearch locale={locale} />
-            </li>
+            </li> */}
 
             <li
               onClick={() => this.setState({ selectedItem: 'notification' })}
               className="isoNotify">
               <TopbarNotification locale={locale} />
             </li>
-
+{/* 
             <li
               onClick={() => this.setState({ selectedItem: 'message' })}
               className="isoMsg">
@@ -61,7 +61,7 @@ class Topbar extends Component {
               onClick={() => this.setState({ selectedItem: 'addToCart' })}
               className="isoCart">
               <TopbarAddtoCart url={url} locale={locale} />
-            </li>
+            </li> */}
 
             <li
               onClick={() => this.setState({ selectedItem: 'user' })}

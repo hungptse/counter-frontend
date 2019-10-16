@@ -168,8 +168,8 @@ class Sidebar extends Component {
                   </span>
                 </Link>
               </Menu.Item>
-              <Menu.Item key="notes">
-                <Link to={`${url}/notes`}>
+              <Menu.Item key="store">
+                <Link to={`${url}/store`}>
                   <span className="isoMenuHolder" style={submenuColor}>
                     <i className="ion-clipboard" />
                     <span className="nav-text">

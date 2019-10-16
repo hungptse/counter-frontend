@@ -6,10 +6,10 @@ import TopbarUser from './topbarUser';
 import TopbarAddtoCart from './topbarAddtoCart';
 
 export {
-  TopbarSearch,
-  TopbarMail,
+  // TopbarSearch,
+  // TopbarMail,
   TopbarNotification,
-  TopbarMessage,
+  // TopbarMessage,
   TopbarUser,
-  TopbarAddtoCart
+  // TopbarAddtoCart
 };
