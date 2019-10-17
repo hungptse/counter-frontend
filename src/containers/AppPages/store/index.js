@@ -29,17 +29,17 @@ const Modal = WithDirection(isoModal);
 
 const cities = [{
   id: 1,
-  value : 'HN',
+  value: 'HN',
   name: "Ha Noi"
 },
 {
   id: 2,
-  value : 'DN',
+  value: 'DN',
   name: "Da Nang"
 },
 {
   id: 3,
-  value : 'SG',
+  value: 'SG',
   name: "Sai Gon"
 }]
 class Store extends Component {
@@ -54,7 +54,7 @@ class Store extends Component {
       name: '',
       modalType: '',
       store: {},
-      selectedCity : cities[0]
+      selectedCity: cities[0]
     };
 
 
@@ -106,7 +106,7 @@ class Store extends Component {
         name: this.state.name,
         address: this.state.address,
         company_id: this.state.selectedCompany.id,
-        city : this.state.selectedCity.value
+        city: this.state.selectedCity.value
       }, {}, {}, true).then(res => {
         this.setState({ stores: [...this.state.stores, res.data] })
       });
@@ -115,7 +115,7 @@ class Store extends Component {
         name: this.state.name,
         address: this.state.address,
         company_id: this.state.selectedCompany.id,
-        city : this.state.selectedCity.value
+        city: this.state.selectedCity.value
       }, {}, {}, true).then(res => {
         this.setState({ stores: this.state.stores.map(r => r.id === this.state.store.id ? res.data : r) })
       });
@@ -149,93 +149,93 @@ class Store extends Component {
     );
 
     return (
-      // <LayoutWrapper>
-      <Tabs defaultActiveKey="1">
-        <Tabs.TabPane
-          tab={
-            <span>
-              <Icon type="bank" />
-              Store
+      <div style={{margin : "50px 20px 50px 20px"}}>
+        <Tabs defaultActiveKey="1">
+          <Tabs.TabPane
+            tab={
+              <span>
+                <Icon type="bank" />
+                Store
                 </span>
-          }
-          key="1"
-        >
-          <PageHeader>Store Management</PageHeader>
-          <Row style={rowStyle} gutter={gutter} justify="start">
-            <Col md={24} sm={24} xs={24} style={colStyle}>
-              <Box>
-                <ContentHolder>
-                  <ButtonWrapper>
-                    <Button type="primary" onClick={this.addNewStore}>
-                      Add new store
+            }
+            key="1"
+          >
+            <PageHeader>Store Management</PageHeader>
+            <Row style={rowStyle} gutter={gutter} justify="start">
+              <Col md={24} sm={24} xs={24} style={colStyle}>
+                <Box>
+                  <ContentHolder>
+                    <ButtonWrapper>
+                      <Button type="primary" onClick={this.addNewStore}>
+                        Add new store
                       </Button>
-                  </ButtonWrapper>
-                  <Modal
-                    maskClosable={false}
-                    visible={this.state.visible}
-                    title="New Store"
-                    onOk={this.handleOk}
-                    onCancel={this.handleCancel}
-                    footer={[
-                      <Button key="back" size="large" onClick={this.handleCancel}>
-                        Return
+                    </ButtonWrapper>
+                    <Modal
+                      maskClosable={false}
+                      visible={this.state.visible}
+                      title="New Store"
+                      onOk={this.handleOk}
+                      onCancel={this.handleCancel}
+                      footer={[
+                        <Button key="back" size="large" onClick={this.handleCancel}>
+                          Return
                     </Button>,
-                      <Button
-                        key="submit"
-                        type="primary"
-                        size="large"
-                        loading={this.state.loading}
-                        onClick={this.handleOk}
-                      >
-                        Submit
+                        <Button
+                          key="submit"
+                          type="primary"
+                          size="large"
+                          loading={this.state.loading}
+                          onClick={this.handleOk}
+                        >
+                          Submit
                     </Button>,
-                    ]}
-                  >
-                    <div className="isoInputFieldset vertical" style={{ marginBottom: "5%" }}>
-                      <InputBox
-                        label={<IntlMessages id="name" />}
-                        placeholder="7-11 at FU"
-                        value={this.state.name}
-                        required
-                        onChange={(e) => this.setState({ name: e.target.value })}
-                      />
-                    </div>
-                    <div className="isoInputFieldset vertical" style={{ marginBottom: "5%" }}>
-                      <InputBox
-                        label={"Address"}
-                        placeholder="FPT Univeristy, District 9, HCM"
-                        value={this.state.address}
-                        required
-                        onChange={(e) => this.setState({ address: e.target.value })}
-                      />
-                    </div>
-                    <div className="isoInputFieldset vertical" style={{ marginBottom: "5%" }}>
-                      <DropdownBox label={"Company"} menuClicked={menuClicked} value={selectedCompany.name} />
-                    </div>
-                    <div className="isoInputFieldset vertical" style={{ marginBottom: "5%" }}>
-                      <DropdownBox label={"City"} menuClicked={menuClickedCity} value={selectedCity.name} />
-                    </div>
-                  </Modal>
-                  <SimpleTable columns={this.columns} dataSource={stores} />
-                </ContentHolder>
-              </Box>
-            </Col>
-          </Row>
-        </Tabs.TabPane>
-        <Tabs.TabPane
-          tab={
-            <span>
-              <Icon type="apartment" />
-              Company
+                      ]}
+                    >
+                      <div className="isoInputFieldset vertical" style={{ marginBottom: "5%" }}>
+                        <InputBox
+                          label={<IntlMessages id="name" />}
+                          placeholder="7-11 at FU"
+                          value={this.state.name}
+                          required
+                          onChange={(e) => this.setState({ name: e.target.value })}
+                        />
+                      </div>
+                      <div className="isoInputFieldset vertical" style={{ marginBottom: "5%" }}>
+                        <InputBox
+                          label={"Address"}
+                          placeholder="FPT Univeristy, District 9, HCM"
+                          value={this.state.address}
+                          required
+                          onChange={(e) => this.setState({ address: e.target.value })}
+                        />
+                      </div>
+                      <div className="isoInputFieldset vertical" style={{ marginBottom: "5%" }}>
+                        <DropdownBox label={"Company"} menuClicked={menuClicked} value={selectedCompany.name} />
+                      </div>
+                      <div className="isoInputFieldset vertical" style={{ marginBottom: "5%" }}>
+                        <DropdownBox label={"City"} menuClicked={menuClickedCity} value={selectedCity.name} />
+                      </div>
+                    </Modal>
+                    <SimpleTable columns={this.columns} dataSource={stores} />
+                  </ContentHolder>
+                </Box>
+              </Col>
+            </Row>
+          </Tabs.TabPane>
+          <Tabs.TabPane
+            tab={
+              <span>
+                <Icon type="apartment" />
+                Company
               </span>
-          }
-          key="2"
-        >
-          <Company />
-        </Tabs.TabPane>
-      </Tabs>
+            }
+            key="2"
+          >
+            <Company />
+          </Tabs.TabPane>
+        </Tabs>
+      </div>
 
-      // </LayoutWrapper >
     );
   }
 }

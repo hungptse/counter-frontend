@@ -14,6 +14,32 @@ class AppRouter extends React.Component {
         />
         <Route
           exact
+          path={`${url}/counter`}
+          component={asyncComponent(() => import('../AppPages/counter'))}
+        />
+        <Route
+          exact
+          path={`${url}/price-list`}
+          component={asyncComponent(() => import('../AppPages/price-list'))}
+        />
+        <Route
+          exact
+          path={`${url}/store`}
+          component={asyncComponent(() => import('../AppPages/store'))}
+        />
+        <Route
+          exact
+          path={`${url}/role`}
+          component={asyncComponent(() => import('../AppPages/role'))}
+        />
+        <Route
+          exact
+          path={`${url}/user`}
+          component={asyncComponent(() => import('../AppPages/user'))}
+        />
+        <Route component={NotFound} />
+        {/* <Route
+          exact
           path={`${url}/calendar`}
           component={asyncComponent(() => import('../Calendar/Calendar'))}
         />
@@ -269,13 +295,13 @@ class AppRouter extends React.Component {
           exact
           path={`${url}/invoice`}
           component={asyncComponent(() => import('../Page/invoice/invoice'))}
-        />
+        /> */}
         {/* <Route
           exact
           path={`${url}/card`}
           component={asyncComponent(() => import('../Ecommerce/card'))}
         /> */}
-        <Route
+        {/* <Route
           exact
           path={`${url}/cart`}
           component={asyncComponent(() => import('../Ecommerce/cart'))}
@@ -291,33 +317,8 @@ class AppRouter extends React.Component {
           component={asyncComponent(() =>
             import('../AdvancedUI/ReactDates/reactDates')
           )}
-        />
-        <Route
-          exact
-          path={`${url}/uppy`}
-          component={asyncComponent(() => import('../AdvancedUI/uppy'))}
-        />
-        <Route
-          exact
-          path={`${url}/dropzone`}
-          component={asyncComponent(() => import('../AdvancedUI/dropzone'))}
-        />
-        <Route
-          exact
-          path={`${url}/store`}
-          component={asyncComponent(() => import('../AppPages/store'))}
-        />
-        <Route
-          exact
-          path={`${url}/role`}
-          component={asyncComponent(() => import('../AppPages/role'))}
-        />
-        <Route
-          exact
-          path={`${url}/user`}
-          component={asyncComponent(() => import('../AppPages/user'))}
-        />
-        <Route component={NotFound} />
+        /> */}
+        
 
       </Switch>
     );

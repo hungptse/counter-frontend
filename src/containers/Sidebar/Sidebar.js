@@ -179,8 +179,8 @@ class Sidebar extends Component {
                   </span>
                 </Link>
               </Menu.Item>
-              <Menu.Item key="todo">
-                <Link to={`${url}/todo`}>
+              <Menu.Item key="pricelist">
+                <Link to={`${url}/price-list`}>
                   <span className="isoMenuHolder" style={submenuColor}>
                     <i className="ion-android-list" />
                     <span className="nav-text">
@@ -190,8 +190,8 @@ class Sidebar extends Component {
                   </span>
                 </Link>
               </Menu.Item>
-              <Menu.Item key="contacts">
-                <Link to={`${url}/contacts`}>
+              <Menu.Item key="counter">
+                <Link to={`${url}/counter`}>
                   <span className="isoMenuHolder" style={submenuColor}>
                     <i className="ion-clock" />
                     <span className="nav-text">

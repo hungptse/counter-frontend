@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Layout, Icon, Row, Col, Empty, Modal, Dropdown, Transfer } from 'antd';
+import { Layout, Icon, Row, Col, Empty, Modal, Dropdown, Transfer, message } from 'antd';
 import Button from '../../../components/uielements/button';
 import ContactList from '../../../components/contacts/contactList';
 import SingleContactView from '../../../components/contacts/singleView';
@@ -13,7 +13,7 @@ import Box from '../../../components/utility/box';
 import ContentHolder from '../../../components/utility/contentHolder';
 import basicStyle from '../../../config/basicStyle';
 import { ButtonWrapper } from '../../../components/card/cardModal.style';
-import { GET, ENDPOINT } from '../../../helpers/api';
+import { GET, ENDPOINT, POST } from '../../../helpers/api';
 import InputBox from '../../../components/utility/input-box';
 import { DropdownMenu, MenuItem } from '../../../components/uielements/dropdown';
 import DropdownBox from '../../../components/utility/dropdown';
@@ -21,7 +21,7 @@ import DropdownBox from '../../../components/utility/dropdown';
 const { Content } = Layout;
 const { confirm } = Modal;
 class Contacts extends Component {
-  state = { users: [], selectedContact: {}, roles: [], selectedRole: {}, stores: [], selectedKeys: [], targetKeys: [], selectedStores: [] }
+  state = { users: [], selectedContact: {}, roles: [], selectedRole: {}, stores: [], selectedStore: {} }
   async componentDidMount() {
     await GET(ENDPOINT.ALL_USER, {}, {}, true).then(res => {
       this.setState({ users: res.data.user })
@@ -29,13 +29,11 @@ class Contacts extends Component {
     await GET(ENDPOINT.ALL_ROLE, {}, {}, true).then(res => {
       this.setState({ roles: res.data.roles })
     });
-    this.setState({ selectedRole: this.state.roles[0] ? this.state.roles[0] : { name: "Role not found" } });
     await GET(ENDPOINT.ALL_STORE, {}, {}, true).then(res => {
       this.setState({ stores: res.data.items });
     });
-    this.setState({ targetKeys: this.state.stores.map(s => s.id) });
-    this.state.stores.forEach(s => s["key"] = s.id.toString());
-    this.state.stores.forEach(s => s["title"] = s.name);
+    this.setState({ selectedRole: this.state.roles[0] ? this.state.roles[0] : { name: "Role not found" } });
+    this.setState({ selectedStore: this.state.stores[0] ? this.state.stores[0] : { name: "Store not found" } });
   }
   changeContact = (id) => {
     this.setState({ selectedContact: this.state.users.filter(user => user.id === id)[0] })
@@ -45,12 +43,35 @@ class Contacts extends Component {
     // await this.getAllPermission();
     this.setState({
       visible: true,
-
     });
   };
 
-  handleOk = () => {
-    console.log(this.state);
+  handleOk = async () => {
+    this.setState({ loading: true });
+    await POST(ENDPOINT.ALL_USER, {
+      username: this.state.username,
+      name: this.state.name,
+      phone_number: this.state.phone,
+      email: this.state.email,
+      address: this.state.address,
+      role_id: this.state.selectedRole.id,
+      gender: 1
+    }, {}, {}, true).then(async res => {
+      if (res.status == 200) {
+        const user = res.data;
+        this.setState({ users: [...this.state.users, user] });
+        await POST(ENDPOINT.STORE_OF_USER, {
+          store_id: this.state.selectedStore.id,
+          user_id: user.id
+        }, {}, {}, true).then(r => {
+          message.info("Created user");
+        })
+      }
+    });
+
+    setTimeout(() => {
+      this.setState({ loading: false, visible: false });
+    }, 2000);
 
   }
 
@@ -62,33 +83,24 @@ class Contacts extends Component {
     this.setState({ selectedRole: e.key != this.state.selectedRole.id ? this.state.roles.find(r => r.id == e.key) : this.state.selectedRole })
   }
 
-  handleChange = (nextTargetKeys, direction, moveKeys) => {
-    this.setState({ targetKeys: nextTargetKeys });
-    // if (direction === 'left') {
-    //   let mergeArray = [...this.state.selectedStores, ...moveKeys]
-    //   this.setState({ selectedStores: mergeArray })
-    // } else {
-    //   this.setState({ selectedStores: this.state.selectedStores.filter(e => moveKeys.indexOf(e) < 0) })
-    // }
-    console.log(this.state.selectedStores, "SELECTED")
-    console.log(this.state.targetKeys)
-  };
-  ;
-
-  handleSelectChange = (sourceSelectedKeys, targetSelectedKeys) => {
-    this.setState({ selectedKeys: [...sourceSelectedKeys, ...targetSelectedKeys] });
-  };
-  filterOption = (inputValue = inputValue.forEach(value => value.name.toLowerCase()), option) => option.name.indexOf(inputValue) > -1;
+  handleMenuClickToLinkStore = e => {
+    this.setState({ selectedStore: e.key != this.state.selectedStore.id ? this.state.stores.find(r => r.id == e.key) : this.state.selectedStore });
+  }
 
   render() {
     const { rowStyle, colStyle, gutter } = basicStyle;
-    const { users, selectedContact, roles, selectedRole, stores, targetKeys, selectedKeys } = this.state;
+    const { users, selectedContact, roles, selectedRole, stores, selectedStore } = this.state;
     const menuClicked = (
       <DropdownMenu onClick={this.handleMenuClickToLink}>
         {roles.map(role => (<MenuItem key={role.id}>{role.name}</MenuItem>))}
       </DropdownMenu>
     );
-    
+    const menuClickedStore = (
+      <DropdownMenu onClick={this.handleMenuClickToLinkStore}>
+        {stores.map(store => (<MenuItem key={store.id}>{store.name}</MenuItem>))}
+      </DropdownMenu>
+    );
+
     return (
       <LayoutWrapper>
         <PageHeader>User Management</PageHeader>
@@ -148,7 +160,8 @@ class Contacts extends Component {
                       required
                       onChange={(e) => this.setState({ phone: e.target.value })}
                     />
-                  </div><div className="isoInputFieldset vertical" style={{ marginBottom: "5%" }}>
+                  </div>
+                  <div className="isoInputFieldset vertical" style={{ marginBottom: "5%" }}>
                     <InputBox
                       label={"Email"}
                       placeholder="example@counter.fptu.com"
@@ -158,20 +171,19 @@ class Contacts extends Component {
                     />
                   </div>
                   <div className="isoInputFieldset vertical" style={{ marginBottom: "5%" }}>
+                    <InputBox
+                      label={"Address"}
+                      placeholder="HCMC"
+                      value={this.state.address}
+                      required
+                      onChange={(e) => this.setState({ address: e.target.value })}
+                    />
+                  </div>
+                  <div className="isoInputFieldset vertical" style={{ marginBottom: "5%" }}>
                     <DropdownBox label={"Role"} menuClicked={menuClicked} value={selectedRole.name} />
                   </div>
                   <div className="isoInputFieldset vertical" style={{ marginBottom: "5%" }}>
-                    <Transfer
-                      dataSource={stores}
-                      titles={['All Store', 'Work Store']}
-                      targetKeys={targetKeys}
-                      selectedKeys={selectedKeys}
-                      onChange={this.handleChange}
-                      onSelectChange={this.handleSelectChange}
-                      render={item => item.title}
-                      showSearch={true}
-                      filterOption={this.filterOption}
-                    />
+                    <DropdownBox label={"Store will working"} menuClicked={menuClickedStore} value={selectedStore.name} />
                   </div>
                 </Modal>
                 <ContactsWrapper
@@ -191,19 +203,10 @@ class Contacts extends Component {
                     {Object.keys(selectedContact).length != 0 ? (
                       <Content className="isoContactBox">
                         <div className="isoContactControl">
-                          {/* <Button type="button" onClick={onVIewChange}>
-                  {editView ? <Icon type="check" /> : <Icon type="edit" />}{' '}
-                </Button> */}
-                          {/* <DeleteButton
-                  deleteContact={deleteContact}
-                  contact={selectedContact}
-                /> */}
                         </div>
                         <SingleContactView
                           contact={selectedContact}
-                        // otherAttributes={otherAttributes}
                         />
-
                       </Content>
                     ) : (
                         <Empty description={false} />

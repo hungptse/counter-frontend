@@ -16,7 +16,7 @@ const { confirm } = Modal;
 
 const Button = Buttons;
 export default class VCardWidget extends Component {
-  state = { roles: [], selectedRole: {}, user_stores: [] };
+  state = { roles: [], selectedRole: {}, user_stores: {} };
   async componentDidMount() {
     await GET(ENDPOINT.ALL_ROLE, {}, {}, true).then(res => {
       this.setState({ roles: res.data.roles });
@@ -25,12 +25,23 @@ export default class VCardWidget extends Component {
 
     await POST(ENDPOINT.STORE_OF_USER + `/${this.props.user.id}`, {}, {}, {
     }, true).then(res => {
-      if (res.status === 2000) {
-        this.setState({ user_stores: res.data.user_store });
+      if (res.status == 200) {
+        this.setState({ user_stores: res.data.user_store.store });
       }
     });
+    // console.log(this.state.user_stores)
   }
 
+  async componentWillReceiveProps(props) {
+    await POST(ENDPOINT.STORE_OF_USER + `/${props.user.id}`, {}, {}, {
+    }, true).then(res => {
+      if (res.status == 200) {
+        this.setState({ user_stores: res.data.user_store.store });
+      }
+    });
+    // console.log(this.state.user_stores)
+
+  }
   handleMenuClickToLink = e => {
     if (e.key != this.state.selectedRole.id) {
       confirm({
@@ -100,7 +111,7 @@ export default class VCardWidget extends Component {
             <Descriptions.Item label="Status">
               <Badge status="processing" text="Active" />
             </Descriptions.Item>
-            <Descriptions.Item label="Store working" span={3}>{this.state.user_stores.length !== 0 ? this.state.user_stores.map(us => (<Tag color="#108ee9">{us.stores.name}</Tag>)) : "This user not working any store"}</Descriptions.Item>
+            <Descriptions.Item label="Store working" span={3}><Tag color="#108ee9">{this.state.user_stores.name}</Tag></Descriptions.Item>
           </Descriptions>
         </Card>
       </div>
