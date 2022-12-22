@@ -24,7 +24,7 @@
     "iscroll": "^5.2.0",
     "js-info-bubble": "git+https://github.com/RedQ/js-info-bubble.git",
     "js-rich-marker": "^1.1.2",
-    "jsonwebtoken": "^8.5.1",
+    "jsonwebtoken": "^9.0.0",
     "lodash": "^4.17.4",
     "moment": "^2.18.1",
     "nprogress": "^0.2.0",
